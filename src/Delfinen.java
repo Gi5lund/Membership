@@ -22,12 +22,15 @@ public class Delfinen {
 			medlemmer.add(new Medlem());
 
 		}
-		String filename="medlemmer.ser";
+		/* her vil jeg oprette 5 forskellige konkurrencesvømmere og prøve at benytte serialization/deserialization
+		til at persistere mine objekter
+				String filename="medlemmer.ser";
 		String ksvimname="k";
 		for(int i=0;i<5;i++){
-
+		ksvimname=ksvimname+i;
+		Konkurrencesvømmer k=new Konkurrencesvømmer()
 		}
-
+		*/
 		//Menu.hovedmenu(medlemmer);
 
 

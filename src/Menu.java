@@ -32,13 +32,13 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
                         loop = false;
                         break;
                     case 1:
-                        stamoplysninger(medlemmer);
+                        medlemmer=stamoplysninger(medlemmer);
                         break;
                     case 2:
-                        kontingentoplysninger(medlemmer);
+                       kontingentoplysninger(medlemmer);
                         break;
                     case 3:
-                        svommeresultater(medlemmer);
+                        medlemmer=svommeresultater(medlemmer);
                         break;
                     case 4:
                         medlemsliste(medlemmer);
@@ -74,21 +74,31 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
                     case 0:
                         loop = false;
                         hovedmenu(medlemmer);
+                        //return medlemmer;
                         break;
                     case 1:
-                        opretMedlem(medlemmer);
+                        medlemmer = Medlemsadministration.opretMedlem(medlemmer);
+                        //return medlemmer;
                         break;
                     case 2:
-                        redStamoplysninger(medlemmer);
+                        Medlem m=Medlemsadministration.selectMember(medlemmer);
+                        try{
+                        medlemmer=Medlemsadministration.redigerStamoplysninger(medlemmer,m);
+
+                        } catch (FileNotFoundException e) {
+                            System.out.println("hovsa: "+e);
+                        }
+                       // return medlemmer;
                         break;
                     case 3:
                         medlemmer= sletMedlem(medlemmer);
+                       // return medlemmer;
                         break;
                     case 4:
                         medlemsliste(medlemmer);
                         break;
                     default:
-                        System.out.println("Forker indtastning, tast 1,2,3 eller 4.");
+                        System.out.println("Forkert indtastning, tast 1,2,3 eller 4.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Forkert indtastning, tast 1,2,3 eller 4.");
@@ -139,7 +149,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return medlemmer;
     }
 
-    public static void svommeresultater( ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Medlem> svommeresultater( ArrayList<Medlem> medlemmer) {
 
         boolean loop = true;
         while(loop) {
@@ -161,7 +171,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
                         hovedmenu(medlemmer);
                         break;
                     case 1:
-                        opdaterResultater(medlemmer);
+                        medlemmer= opdaterResultater(medlemmer);
                         break;
                     case 2:
                         seTopFem(medlemmer);
@@ -179,7 +189,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
                 System.out.println("Forkert indtastning, tast 1,2,3 eller 4.");
             }
         }
-
+        return medlemmer;
     }
 
     public static ArrayList<Medlem> opretMedlem( ArrayList<Medlem> medlemmer) {
@@ -190,20 +200,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
 
     }
 
-    public static ArrayList<Medlem> redStamoplysninger( ArrayList<Medlem> medlemmer) {
-        Medlemsadministration.seMedlemsListe( medlemmer);
-        System.out.println("Indtast medlemsnummer");
 
-        Scanner scn = new Scanner(System.in);
-        int mnr = -1;
-        mnr=scn.nextInt();
-        try {
-            medlemmer= Medlemsadministration.redigerStamoplysninger(medlemmer,mnr);
-        } catch (FileNotFoundException e) {
-            System.out.println("hovsa: "+e);
-        }
-        return medlemmer;
-    }
 
     public static ArrayList<Medlem> sletMedlem( ArrayList<Medlem> medlemmer) {
         Medlemsadministration.seMedlemsListe( medlemmer);
@@ -255,7 +252,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         System.out.println("tast 1 for træningsresultat, tast 2 for stævneresultat");
         int trænerinput=scn.nextInt();
         //opdaterResultater(Konkurrencesvømmer k, int disciplinnummer, int trænerinput)
-        Medlemsadministration.opdaterResultater(k,disciplinnummer,trænerinput);
+        return Medlemsadministration.opdaterResultater(medlemmer,k,disciplinnummer,trænerinput);
     }
 
     public static void seTopFem(ArrayList<Medlem> medlemmer) {

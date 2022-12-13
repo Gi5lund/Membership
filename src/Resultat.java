@@ -6,6 +6,15 @@ import java.time.format.DateTimeFormatter;
 public class Resultat implements Serializable {
 
 	private LocalDate træningsdato=LocalDate.now();
+
+	public LocalTime getTræningstid() {
+		return træningstid;
+	}
+
+	public LocalTime getStævnetid() {
+		return stævnetid;
+	}
+
 	private LocalTime træningstid;
 	private String stævnenavn="ikke deltaget i stævne endnu";
 	private int placering=-99;

@@ -298,7 +298,7 @@ public class Medlemsadministration {
 
     }
 
-    public static ArrayList<Medlem> redigerStamoplysninger(ArrayList<Medlem> medlemmer, int mnr) throws FileNotFoundException {
+    public static ArrayList<Medlem> redigerStamoplysninger(ArrayList<Medlem> medlemmer, Medlem m) throws FileNotFoundException {
         Scanner sc=new Scanner(System.in);
         System.out.println(" hvilke stamoplysninger øsnker du at ændre?: ");
         System.out.println("1: ændre navn");
@@ -314,13 +314,15 @@ public class Medlemsadministration {
                 if (nytNavn.contains(" ")) {
                     nytNavn.replace(" ", "_");
                 }
-                medlemmer.get(mnr - 1).setNavn(nytNavn);
+                m.setNavn(nytNavn);
+                persistChanges(medlemmer);
+               // return medlemmer;
                 break;
             case 2:
                 System.out.println("vil ændre til passivt medlemskab? [J/N]: ");
                 rep = sc.next();
                 if (rep.equalsIgnoreCase("j")) {
-                    medlemmer.get(mnr - 1).setType("PassivMedlem");
+                    m.setType("PassivMedlem");
                     persistChanges(medlemmer);
               /*      File medlemsliste = new File("medlemsliste.txt");
                     PrintStream medlemprint = null;//den gamle fil overskrives
@@ -341,7 +343,7 @@ public class Medlemsadministration {
                     System.out.println("vil du ændre til aktivt medlemskab (Motionist)? [J/N]: ");
                     rep = sc.next();
                 if (rep.equalsIgnoreCase("j")) {
-                    medlemmer.get(mnr - 1).setType("Medlem");
+                    m.setType("Medlem");
                     persistChanges(medlemmer);
                /*     File medlemsliste = new File("medlemsliste.txt");
                     PrintStream medlemprint = null;//den gamle fil overskrives
@@ -358,7 +360,7 @@ public class Medlemsadministration {
                     System.out.println("vil du ændre til konkurrencesvømmer? ");
                     rep= sc.next();
                 if (rep.equalsIgnoreCase("j")) {
-                    medlemmer.get(mnr - 1).setType("Konkurrencesvømmer");
+                    m.setType("Konkurrencesvømmer");
                     persistChanges(medlemmer);
                /*     File medlemsliste = new File("medlemsliste.txt");
                     PrintStream medlemprint = new PrintStream(new FileOutputStream(medlemsliste));//den gamle fil overskrives
@@ -374,9 +376,9 @@ public class Medlemsadministration {
                     break;
             case 3:
                 System.out.println("vil du tilføje discipliner");
-                Konkurrencesvømmer k=(Konkurrencesvømmer) medlemmer.get(mnr-1);
+                Konkurrencesvømmer k=(Konkurrencesvømmer) m;
                 k.tilføjDisciplin();
-                //return medlemmer;
+               // return medlemmer;
                 break;
 
             }
@@ -401,8 +403,18 @@ public class Medlemsadministration {
         }
     }
 
-    public static void opdaterResultater(Konkurrencesvømmer k, int disciplinnummer, int trænerinput) { //del af trænerens muligheder
+    public static Medlem selectMember(ArrayList<Medlem> medlemmer){
+        Medlemsadministration.seMedlemsListe(medlemmer);
+        System.out.println("Indtast medlemsnummer");
 
+        Scanner scn = new Scanner(System.in);
+        int mnr = -1;
+        mnr=scn.nextInt();
+        Medlem m=medlemmer.get(mnr-1);
+        return m;
+    }
+    public static ArrayList<Medlem> opdaterResultater(ArrayList<Medlem> medlemmer, Konkurrencesvømmer k, int disciplinnummer, int trænerinput) { //del af trænerens muligheder
+        DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
         Scanner sc= new Scanner(System.in);
         switch (trænerinput){
             case 1:
@@ -412,7 +424,14 @@ public class Medlemsadministration {
                 String dato=sc.next();
                 System.out.println("indtast træningstid som [HH:MM:ss.SSS]: ");
                 String træningstid=sc.next();
-                k.getDiscipliner()[disciplinnummer].getResultater().setTræningsresultater(dato,træningstid);
+                if (LocalTime.parse(træningstid,tidsformat).compareTo(k.getDiscipliner()[disciplinnummer].getResultater().getTræningstid())<0) {
+                    k.getDiscipliner()[disciplinnummer].getResultater().setTræningsresultater(dato, træningstid);
+                    persistChanges(medlemmer);
+                }
+               else{
+                    System.out.println("den nye tid er ikke en forbedring");
+                }
+               // return medlemmer;
                 break;
             case 2:
                 System.out.println("indtast stævnenavn");
@@ -421,9 +440,17 @@ public class Medlemsadministration {
                 int placering=sc.nextInt();
                 System.out.println("indtast tid som [HH:MM:ss.SSS]:");
                 String tid=sc.next();
-                k.getDiscipliner()[disciplinnummer].getResultater().setStævneresultater(stævnenavn,placering,tid);
+                if (LocalTime.parse(tid,tidsformat).compareTo(k.getDiscipliner()[disciplinnummer].getResultater().getStævnetid())<0) {
+                    k.getDiscipliner()[disciplinnummer].getResultater().setStævneresultater(stævnenavn,placering,tid);
+                    persistChanges(medlemmer);
+                }
+                else{
+                    System.out.println("den nye tid er ikke en forbedring");
+                }
+
+              //  return medlemmer;
                 break;
         }
-
+        return medlemmer;
     }
 }
