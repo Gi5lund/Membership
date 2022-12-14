@@ -5,61 +5,61 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Member implements Serializable {
-	private static int medlemmer = 0;
+	private static int memberTotal = 0;
 
 	private static final long serialVersionUID = -9177640809256836733L;
-	private int medlemsnummer;
-	private String navn;
-	private LocalDate foedselsdag;
-	private boolean gender;
+	private int memberID;
+	private String name;
+	private LocalDate birthday;
+	private boolean male;
 	private String type = "";
-	private double kontingent = 0;
-	private boolean harBetalt;
+	private double membershipFee = 0;
+	private boolean membershipPaid;
 
 
 	//Constructors. no-arg constructor must be available
 	public Member() {
-		this.medlemsnummer = 1;
+		this.memberID = 1;
 
-		this.navn = "Fornavn";
-		this.foedselsdag = LocalDate.now();
-		this.gender = false;
-		this.harBetalt = false;
+		this.name = "Fornavn";
+		this.birthday = LocalDate.now();
+		this.male = false;
+		this.membershipPaid = false;
 		this.type = "Medlemstype";
-		this.kontingent = this.beregnKontingent();
+		this.membershipFee = this.calculateMembershipFee();
 	}
 
-	public Member(String navn, LocalDate foedselsdag, boolean gender, boolean harBetalt) {
-		medlemsnummer = medlemmer + 1;
-		medlemmer++;
-		this.navn = navn;
-		this.foedselsdag = foedselsdag;
-		this.gender = gender;
-		this.harBetalt = harBetalt;
-		this.kontingent = this.beregnKontingent();
+	public Member(String name, LocalDate birthday, boolean male, boolean membershipPaid) {
+		memberID = memberTotal + 1;
+		memberTotal++;
+		this.name = name;
+		this.birthday = birthday;
+		this.male = male;
+		this.membershipPaid = membershipPaid;
+		this.membershipFee = this.calculateMembershipFee();
 	}
 
-	public Member(int medlemsnummer, String navn, LocalDate foedselsdag, boolean gender, String type, double kontingent, boolean harBetalt) {
-		this.medlemsnummer = medlemsnummer;
-		medlemmer++;
-		this.navn = navn;
-		this.foedselsdag = foedselsdag;
-		this.gender = gender;
+	public Member(int memberID, String name, LocalDate birthday, boolean male, String type, double membershipFee, boolean membershipPaid) {
+		this.memberID = memberID;
+		memberTotal++;
+		this.name = name;
+		this.birthday = birthday;
+		this.male = male;
 		this.type = type;
-		this.kontingent = kontingent;
-		this.harBetalt = harBetalt;
+		this.membershipFee = membershipFee;
+		this.membershipPaid = membershipPaid;
 	}
 
-	public boolean isGender() {
-		return gender;
+	public boolean isMale() {
+		return male;
 	}
 
 	public String getType() {
 		return type;
 	}
 
-	public static int getMedlemmer() {
-		return medlemmer;
+	public static int getMemberTotal() {
+		return memberTotal;
 	}
 
 	public void setType(String type) {
@@ -67,67 +67,70 @@ public class Member implements Serializable {
 	}
 
 	/**
-	 * @param foedselsdag
+	 * @param birthday
 	 */
-	public static int getAlder(LocalDate foedselsdag) {
+	public static int getAge(LocalDate birthday) {
 		// TODO - implement Medlem.getAlder
 
 		LocalDate today = LocalDate.now();
-		LocalDate birthday = LocalDate.of(foedselsdag.getYear(), foedselsdag.getMonth(), foedselsdag.getDayOfMonth());
+		LocalDate birthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDayOfMonth());
 		Period period = Period.between(birthday, today);
 		return period.getYears();
 	}
 
-	public LocalDate getFoedselsdag() {
-		return foedselsdag;
+	public LocalDate getBirthday() {
+		return birthday;
 	}
 
-	public boolean getHarBetalt() {
-		return harBetalt;
+	public boolean getMembershipPaid() {
+		return membershipPaid;
 	}
 
-	public double beregnKontingent() {
-		double rabat = 0.75;
-		double kontingent = 1600;
-		double kontingentUng = 1000;
-		if (getAlder(getFoedselsdag()) > 60) {
-			return rabat * kontingent;
-		} else if (getAlder(getFoedselsdag()) < 18) {
-			return kontingentUng;
+	public double calculateMembershipFee() {
+		double discount = 0.75;
+		double fee = 1600;
+		double feeYouthmember = 1000;
+		if (getAge(getBirthday()) > 60) {
+			return discount * fee;
+		} else if (getAge(getBirthday()) < 18) {
+			return feeYouthmember;
 		} else {
-			return kontingent;
+			return fee;
 		}
 	}
 
 	public String toString() {
-		String s = medlemmer + " " + medlemsnummer + " " + navn + " " + foedselsdag + " " + gender + " " + type + " " + kontingent + " " + harBetalt;
+		String s = memberTotal + " " + memberID + " " + name + " " + birthday + " " + male + " " + type + " " + membershipFee + " " + membershipPaid;
 		return s;
 	}
 
-	public String printTilKonsol() {
-		String køn = "";
-		if (this.isGender()) {
-			køn = "mand";
+	public String printToScreen() {
+		String gender = "";
+		if (this.isMale()) {
+			gender = "Male";
 		} else {
-			køn = "kvinde";
+			gender = "Female";
 		}
-		String s = medlemsnummer + " | " + navn + " | " + Member.getAlder(this.getFoedselsdag()) + " | " + køn + " | " + harBetalt;
+		String s = memberID + " | " + name + " | " + Member.getAge(this.getBirthday()) + " | " + gender + " | " + membershipPaid;
 		return s;
 	}
 
 
-	public int getMedlemsnummer() {
-		return medlemsnummer;
+	public int getMemberID() {
+		return memberID;
 	}
 
-	public void setNavn(String nytnavn) {
-		this.navn=nytnavn;
+	public void setName(String nytnavn) {
+		this.name =nytnavn;
 	}
-	public void setHarBetalt(){
-		harBetalt=true;
+	public void setHasPaid(){
+		membershipPaid =true;
 	}
-//Skriv til fil og indlæs fra fil
 
+
+	public String getMemberName() {
+		return name;
 	}
+}
 
 

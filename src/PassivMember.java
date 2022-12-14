@@ -16,7 +16,7 @@ public class PassivMember extends Member implements Serializable {
 
 
     @Override
-    public double beregnKontingent() {
+    public double calculateMembershipFee() {
         return 500;
     }
 }

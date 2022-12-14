@@ -92,9 +92,9 @@ public class Konkurrencesvømmer extends Member implements Serializable {
 
 	}
 
-	public String printTilKonsol(){
+	public String printToScreen(){
 		String s=Arrays.toString(discipliner);
-		return super.printTilKonsol()+s;
+		return super.printToScreen()+s;
 	}
 
 	public String toString(){
@@ -189,7 +189,7 @@ public class Konkurrencesvømmer extends Member implements Serializable {
 	public static void konkurrencesvoemmerliste(ArrayList<Member> medlemmer) {
 		for(Member m: medlemmer){
 			if(m.getType().equals("Konkurrencesvømmer")) {
-				System.out.println(m.printTilKonsol());
+				System.out.println(m.printToScreen());
 			}
 		}
 

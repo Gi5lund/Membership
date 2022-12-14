@@ -132,10 +132,10 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
                         Kontingenter.seRestance(medlemmer);
                         break;
                     case 2:
-                        Kontingenter.regBetaling(medlemmer);
+                        Kontingenter.registerPayment(medlemmer);
                         break;
                     case 3:
-                        Kontingenter.kontingentliste(medlemmer);
+                        Kontingenter.membershipFeesList(medlemmer);
                         break;
                     default:
                         System.out.println("Forkert indtastning, tast 1,2 eller 3.");

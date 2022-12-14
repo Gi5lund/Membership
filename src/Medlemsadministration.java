@@ -161,22 +161,22 @@ public class Medlemsadministration {
                 Konkurrencesvømmer k = (Konkurrencesvømmer) m;
                 if (discplinKønAlder.contains("b")) {         //Brystsvømning
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[0] && k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[0] && !k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[0] && !k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[0] && k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -188,22 +188,22 @@ public class Medlemsadministration {
 
                 if (discplinKønAlder.contains("c")) {         //crawl
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[1] && k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[1] && !k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[1] && !k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[1] && k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -212,22 +212,22 @@ public class Medlemsadministration {
                 }
                 if (discplinKønAlder.contains("r")) {         //ryg
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[2] && k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[2] && !k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[2] && !k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[2] && k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -236,22 +236,22 @@ public class Medlemsadministration {
                 }
                 if (discplinKønAlder.contains("f")) {         //butterfly
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[3] && k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[3] && !k.isGender() && k.getAlder(k.getFoedselsdag()) < 18) {
+                        if (k.getAktivdisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[3] && !k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[3] && k.isGender() && k.getAlder(k.getFoedselsdag()) >= 18) {
+                        if (k.getAktivdisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -266,19 +266,19 @@ public class Medlemsadministration {
         }
         if(top5.size()>=5) {
             for (int i = 0; i < 5; i++) {
-                System.out.println(top5.get(i).printTilKonsol());
+                System.out.println(top5.get(i).printToScreen());
             }
         }
         else{
                 for(int i=0;i<top5.size();i++){
-                System.out.println(top5.get(i).printTilKonsol());
+                System.out.println(top5.get(i).printToScreen());
                 }
             }
         }
 
     public static void seMedlemsListe(ArrayList<Member> members) {
         for(Member m:members){
-            System.out.println(m.printTilKonsol());
+            System.out.println(m.printToScreen());
         }
     }
 
@@ -314,7 +314,7 @@ public class Medlemsadministration {
                 if (nytNavn.contains(" ")) {
                     nytNavn.replace(" ", "_");
                 }
-                m.setNavn(nytNavn);
+                m.setName(nytNavn);
                 persistChanges(members);
                // return members;
                 break;
