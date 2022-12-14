@@ -12,7 +12,7 @@ public class SerializationUtil {
         }
 
         // serialize the given object and save it to file
-        public static void serialize(Object obj, String fileName) throws IOException {
+        public static void serialize(Object obj, String fileName) throws IOException, FileNotFoundException {
             FileOutputStream fos = new FileOutputStream(fileName);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(obj);

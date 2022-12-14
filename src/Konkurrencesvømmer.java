@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Konkurrencesvømmer extends Medlem implements Serializable {
+public class Konkurrencesvømmer extends Member implements Serializable {
 	private static final long serialVersionUID = 211326650313734248L;
 	private boolean[] aktivdisciplin=new boolean[4];
 
@@ -186,8 +186,8 @@ public class Konkurrencesvømmer extends Medlem implements Serializable {
 		return discipliner;
 	}
 
-	public static void konkurrencesvoemmerliste(ArrayList<Medlem> medlemmer) {
-		for(Medlem m: medlemmer){
+	public static void konkurrencesvoemmerliste(ArrayList<Member> medlemmer) {
+		for(Member m: medlemmer){
 			if(m.getType().equals("Konkurrencesvømmer")) {
 				System.out.println(m.printTilKonsol());
 			}

@@ -1,14 +1,11 @@
 import java.io.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Delfinen {
 
 
 	public static void main(String[] args) throws Exception {
-		 ArrayList<Medlem> medlemmer=new ArrayList<>();
+		 ArrayList<Member> medlemmer=new ArrayList<>();
 
 		File memberlist=new File("medlemsliste.txt");
 		if (memberlist.exists()) {
@@ -19,7 +16,18 @@ public class Delfinen {
 			System.out.println("filen oprettes");
 			 medlemmer=new ArrayList<>();
 
-			medlemmer.add(new Medlem());
+			medlemmer.add(new Member());
+
+		}
+		String filename="medlemmer.ser";
+		for(int i=0;i<medlemmer.size();i++){
+			try {
+				SerializationUtil.serialize( medlemmer.get(i),filename);
+			}
+			catch ( IOException e) {
+				e.printStackTrace();
+				return;
+			}
 
 		}
 		/* her vil jeg oprette 5 forskellige konkurrencesvømmere og prøve at benytte serialization/deserialization

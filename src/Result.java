@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class Resultat implements Serializable {
+public class Result implements Serializable {
 
 	private LocalDate træningsdato=LocalDate.now();
 
@@ -23,7 +23,7 @@ public class Resultat implements Serializable {
 	private LocalTime bedsteTid;
 	transient DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
-	public Resultat(){
+	public Result(){
 
 		String tider="23:59:59.999";
 		LocalTime initialtider=LocalTime.parse(tider,tidsformat);
@@ -32,7 +32,7 @@ public class Resultat implements Serializable {
 		this.bedsteTid=initialtider;
 	}
 
-	public Resultat(String træningsdato, String træningstid){
+	public Result(String træningsdato, String træningstid){
 		this.træningsdato=LocalDate.parse(træningsdato);
 		this.træningstid=LocalTime.parse(træningstid);
 		if(this.træningstid.compareTo(this.stævnetid)<0){

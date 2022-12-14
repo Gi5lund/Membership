@@ -1,13 +1,13 @@
 import java.util.Comparator;
 
-public class SorterResultat implements Comparator<Konkurrencesvømmer> {
+public class SortByResult implements Comparator<Konkurrencesvømmer> {
 
     public void setIndex(int index) {
         this.index = index;
     }
 
     private int index=-99;
-    public SorterResultat(int i){
+    public SortByResult(int i){
         this.index= i;
     }
     //getter

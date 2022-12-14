@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -6,9 +5,9 @@ import java.util.Scanner;
 
 public class Menu {
 
-public ArrayList<Medlem> medlemmer=new ArrayList<>();
+public ArrayList<Member> medlemmer=new ArrayList<>();
 
-    public static void hovedmenu(ArrayList<Medlem> medlemmer) {
+    public static void hovedmenu(ArrayList<Member> medlemmer) {
 
 
 
@@ -53,7 +52,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         }//
 
     }
-    public static ArrayList<Medlem> stamoplysninger( ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> stamoplysninger(ArrayList<Member> medlemmer) {
         boolean loop = true;
 
         while (loop) {
@@ -81,7 +80,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
                         //return medlemmer;
                         break;
                     case 2:
-                        Medlem m=Medlemsadministration.selectMember(medlemmer);
+                        Member m=Medlemsadministration.selectMember(medlemmer);
                         try{
                         medlemmer=Medlemsadministration.redigerStamoplysninger(medlemmer,m);
 
@@ -107,7 +106,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return medlemmer;
     }
 
-    public static ArrayList<Medlem> kontingentoplysninger( ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> kontingentoplysninger(ArrayList<Member> medlemmer) {
 
         boolean loop = true;
 
@@ -149,7 +148,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return medlemmer;
     }
 
-    public static ArrayList<Medlem> svommeresultater( ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> svommeresultater(ArrayList<Member> medlemmer) {
 
         boolean loop = true;
         while(loop) {
@@ -192,7 +191,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return medlemmer;
     }
 
-    public static ArrayList<Medlem> opretMedlem( ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> opretMedlem(ArrayList<Member> medlemmer) {
 
         medlemmer = Medlemsadministration.opretMedlem(medlemmer);
 
@@ -202,23 +201,23 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
 
 
 
-    public static ArrayList<Medlem> sletMedlem( ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> sletMedlem(ArrayList<Member> medlemmer) {
         Medlemsadministration.seMedlemsListe( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
         int mnr = -1;
         mnr=scn.nextInt();
-        medlemmer= Medlemsadministration.sletMedlem( medlemmer,mnr);
+        medlemmer= Medlemsadministration.deleteMember( medlemmer,mnr);
         return medlemmer;
     }
 
-    public static void medlemsliste( ArrayList<Medlem> medlemmer) {
+    public static void medlemsliste( ArrayList<Member> medlemmer) {
           System.out.println("Kald medlemsliste");
           Medlemsadministration.seMedlemsListe( medlemmer);
           hovedmenu(medlemmer);
     }
-    public static ArrayList<Medlem> opdaterResultater(ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> opdaterResultater(ArrayList<Member> medlemmer) {
         Medlemsadministration.seMedlemsListe( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
@@ -255,7 +254,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return Medlemsadministration.opdaterResultater(medlemmer,k,disciplinnummer,trænerinput);
     }
 
-    public static void seTopFem(ArrayList<Medlem> medlemmer) {
+    public static void seTopFem(ArrayList<Member> medlemmer) {
         String topFem = "";
 
         Scanner scn = new Scanner(System.in);
@@ -270,7 +269,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
     public static void redDisciplin() {
         System.out.println("Koster desværre ekstra...");
     }
-    static String disciplin(Scanner scn, String topFem, ArrayList<Medlem> medlemmer) {
+    static String disciplin(Scanner scn, String topFem, ArrayList<Member> medlemmer) {
 
             System.out.println("Vælg Svømmedisciplin:");
             System.out.println("1: Bryst");
@@ -303,7 +302,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return topFem;
     }
 
-    static String kon(Scanner scn, String topFem, ArrayList<Medlem> medlemmer) {
+    static String kon(Scanner scn, String topFem, ArrayList<Member> medlemmer) {
 
                 System.out.println("Vælg køn på svømmeren");
                 System.out.println("1: Mand");
@@ -327,7 +326,7 @@ public ArrayList<Medlem> medlemmer=new ArrayList<>();
         return topFem;
     }
 
-    static String alder(Scanner scn, String topFem,ArrayList<Medlem> medlemmer) {
+    static String alder(Scanner scn, String topFem,ArrayList<Member> medlemmer) {
 
                 System.out.println("Vælg alder på svømmeren");
                 System.out.println("1: Junior");

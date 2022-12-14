@@ -2,13 +2,9 @@
 
 import java.io.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Medlem implements Serializable {
+public class Member implements Serializable {
 	private static int medlemmer = 0;
 
 	private static final long serialVersionUID = -9177640809256836733L;
@@ -22,7 +18,7 @@ public class Medlem implements Serializable {
 
 
 	//Constructors. no-arg constructor must be available
-	public Medlem() {
+	public Member() {
 		this.medlemsnummer = 1;
 
 		this.navn = "Fornavn";
@@ -33,7 +29,7 @@ public class Medlem implements Serializable {
 		this.kontingent = this.beregnKontingent();
 	}
 
-	public Medlem(String navn, LocalDate foedselsdag, boolean gender, boolean harBetalt) {
+	public Member(String navn, LocalDate foedselsdag, boolean gender, boolean harBetalt) {
 		medlemsnummer = medlemmer + 1;
 		medlemmer++;
 		this.navn = navn;
@@ -43,7 +39,7 @@ public class Medlem implements Serializable {
 		this.kontingent = this.beregnKontingent();
 	}
 
-	public Medlem(int medlemsnummer, String navn, LocalDate foedselsdag, boolean gender, String type, double kontingent, boolean harBetalt) {
+	public Member(int medlemsnummer, String navn, LocalDate foedselsdag, boolean gender, String type, double kontingent, boolean harBetalt) {
 		this.medlemsnummer = medlemsnummer;
 		medlemmer++;
 		this.navn = navn;
@@ -115,7 +111,7 @@ public class Medlem implements Serializable {
 		} else {
 			køn = "kvinde";
 		}
-		String s = medlemsnummer + " | " + navn + " | " + Medlem.getAlder(this.getFoedselsdag()) + " | " + køn + " | " + harBetalt;
+		String s = medlemsnummer + " | " + navn + " | " + Member.getAlder(this.getFoedselsdag()) + " | " + køn + " | " + harBetalt;
 		return s;
 	}
 

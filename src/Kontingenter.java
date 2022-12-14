@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Kontingenter {
-    public static void seRestance(ArrayList<Medlem> medlemmer) {
-        for(Medlem m: medlemmer) {
+    public static void seRestance(ArrayList<Member> medlemmer) {
+        for(Member m: medlemmer) {
             if (!m.getHarBetalt()) {
                 System.out.println(m.printTilKonsol());
             }
         }
     }
 
-    public static ArrayList<Medlem> regBetaling(ArrayList<Medlem> medlemmer) {
+    public static ArrayList<Member> regBetaling(ArrayList<Member> medlemmer) {
         Medlemsadministration.seMedlemsListe( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
@@ -21,10 +21,10 @@ public class Kontingenter {
         return medlemmer;
 
     }
-    public static void kontingentliste(ArrayList<Medlem> medlemmer) {
+    public static void kontingentliste(ArrayList<Member> medlemmer) {
 
         System.out.println("Det koster ekstra");
-        for (Medlem m:medlemmer){
+        for (Member m:medlemmer){
             System.out.println(m.beregnKontingent());
         }
     }
