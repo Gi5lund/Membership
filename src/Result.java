@@ -5,13 +5,13 @@ import java.time.format.DateTimeFormatter;
 
 public class Result implements Serializable {
 
-	private LocalDate træningsdato=LocalDate.now();
-	private LocalTime træningstid;
-	private String stævnenavn="ikke deltaget i stævne endnu";
-	private int placering=-99;
-	private LocalTime stævnetid;
-	private LocalTime bedsteTid;
-	transient DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+	private LocalDate trainingDate =LocalDate.now();
+	private LocalTime trainingTime;
+	private String competitionEventName ="ikke deltaget i stævne endnu";
+	private int competitionEventRank =-99;
+	private LocalTime competitionEventTime;
+	private LocalTime bestTime;
+	transient DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
 
 
@@ -20,59 +20,59 @@ public class Result implements Serializable {
 
 	public Result(){
 
-		String tider="23:59:59.999";
-		LocalTime initialtider=LocalTime.parse(tider,tidsformat);
-		this.træningstid=initialtider;
-		this.stævnetid=initialtider;
-		this.bedsteTid=initialtider;
+		String initTime="23:59:59.999";
+		LocalTime initialTime=LocalTime.parse(initTime, timeFormat);
+		this.trainingTime =initialTime;
+		this.competitionEventTime =initialTime;
+		this.bestTime =initialTime;
 	}
 
-	public Result(String træningsdato, String træningstid){
-		this.træningsdato=LocalDate.parse(træningsdato);
-		this.træningstid=LocalTime.parse(træningstid);
-		if(this.træningstid.compareTo(this.stævnetid)<0){
-			this.bedsteTid=this.træningstid;
+	public Result(String trainingDate, String trainingTime){
+		this.trainingDate =LocalDate.parse(trainingDate);
+		this.trainingTime =LocalTime.parse(trainingTime);
+		if(this.trainingTime.compareTo(this.competitionEventTime)<0){
+			this.bestTime =this.trainingTime;
 		}
 		else{
-			this.bedsteTid=this.stævnetid;
+			this.bestTime =this.competitionEventTime;
 		}
 	}
 	public void setStævneresultater(String stævnenavn, int placering, String stævnetid){
-		this.stævnenavn=stævnenavn;
-		this.placering=placering;
-		this.stævnetid=LocalTime.parse(stævnetid);
-		if(this.træningstid.compareTo(this.stævnetid)<0){
-			this.bedsteTid=this.træningstid;
+		this.competitionEventName =stævnenavn;
+		this.competitionEventRank =placering;
+		this.competitionEventTime =LocalTime.parse(stævnetid);
+		if(this.trainingTime.compareTo(this.competitionEventTime)<0){
+			this.bestTime =this.trainingTime;
 		}
 		else{
-			this.bedsteTid=this.stævnetid;
+			this.bestTime =this.competitionEventTime;
 		}
 	}
 	public void setTræningsresultater(String træningsdato, String træningstid){
-		this.træningsdato=LocalDate.parse(træningsdato);
-		this.træningstid=LocalTime.parse(træningstid);
-		if(this.træningstid.compareTo(this.stævnetid)<0){
-			this.bedsteTid=this.træningstid;
+		this.trainingDate =LocalDate.parse(træningsdato);
+		this.trainingTime =LocalTime.parse(træningstid);
+		if(this.trainingTime.compareTo(this.competitionEventTime)<0){
+			this.bestTime =this.trainingTime;
 		}
 		else{
-			this.bedsteTid=this.stævnetid;
+			this.bestTime =this.competitionEventTime;
 		}
 	}
 	public LocalTime getResult(){
-		return bedsteTid;
+		return bestTime;
 	}
 	public String toString(){
-		return this.bedsteTid.format(tidsformat);
+		return this.bestTime.format(timeFormat);
 
 	}
-	public LocalTime getTræningstid() {
-		return træningstid;
+	public LocalTime getTrainingTime() {
+		return trainingTime;
 	}
-	public void setBedsteTid(LocalTime res){
-		this.bedsteTid=res;
+	public void setBestTime(LocalTime res){
+		this.bestTime =res;
 	}
-	public LocalTime getStævnetid() {
-		return stævnetid;
+	public LocalTime getCompetitionEventTime() {
+		return competitionEventTime;
 	}
 
 

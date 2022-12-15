@@ -10,7 +10,7 @@ public class Delfinen {
 		File memberlist=new File("medlemsliste.txt");
 		if (memberlist.exists()) {
 			System.out.println("filen findes");
-			 members= MemberHandling.indlæsMedlemmer(members);
+			 members= FileHandler.indlæsMedlemmer(members);
 		}
 		else {
 			System.out.println("filen oprettes");

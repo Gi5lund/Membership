@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class CompetitionSwimmer extends Member implements Serializable {
 	private static final long serialVersionUID = 211326650313734248L;
-	private boolean[] aktiveInDisciplin =new boolean[DISCIPLINE.values().length]; //True if Swimmer trains and compete in discipline
+	private boolean[] activeInDisciplin =new boolean[DISCIPLINE.values().length]; //True if Swimmer trains and compete in discipline
 
 	private SwimDisciplines[] disciplines =new SwimDisciplines[DISCIPLINE.values().length];
 	private LocalTime[] resultsInSwimDisciplines =new LocalTime[DISCIPLINE.values().length];
@@ -17,7 +17,7 @@ public class CompetitionSwimmer extends Member implements Serializable {
 	public CompetitionSwimmer(){
 		super();
 		for(int i=0;i<DISCIPLINE.values().length;i++){
-			this.aktiveInDisciplin[i]=false;
+			this.activeInDisciplin[i]=false;
 			this.disciplines[i]=new SwimDisciplines();
 			this.resultsInSwimDisciplines[i]=LocalTime.parse("23:59:59.000", timeFormat);
 		}
@@ -26,13 +26,13 @@ public class CompetitionSwimmer extends Member implements Serializable {
 	// til at nyoprette et medlem
 	public CompetitionSwimmer(String navn, LocalDate bday, boolean gender, boolean harBetalt, String disciplinset){ //til at oprette nye medlemmer
 		super(navn,bday,gender, harBetalt);
-		this.aktiveInDisciplin =setAktivDiscipliner(disciplinset);
+		this.activeInDisciplin =setAktivDiscipliner(disciplinset);
 		 DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS"); //TODO: TRY MOVE DATETIMEFORMATTER OUTSIDE AS STATIC
-		String tider="23:59:59.000";
-		LocalTime initialtime=LocalTime.parse(tider,timeFormat);
+		String initTime="23:59:59.000";
+		LocalTime initialtime=LocalTime.parse(initTime,timeFormat);
 		//************* TODO: REWRITE THIS PART TO ACOMMODATE TO ENUM DISCPILINE! **********
 		for (int i=0;i<DISCIPLINE.values().length;i++){
-			if(aktiveInDisciplin[i]){
+			if(activeInDisciplin[i]){
 				if(i==0){    //"brystsvømning=b, crawl=c, ryg=r, butterfly=f"
 					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i])); //should be breasstroke
 				}
@@ -53,40 +53,21 @@ public class CompetitionSwimmer extends Member implements Serializable {
 
 	}
 
-	public CompetitionSwimmer(int medlemsnummer, String navn, LocalDate foedselsdag, boolean gender, String type, double kontingent, boolean harBetalt, boolean[] aktivdisciplins, LocalTime[] bedsteresultater){ // til at indlæse medlemmer fra fil
-		super(medlemsnummer, navn,foedselsdag,gender,type, kontingent, harBetalt);
-		this.aktiveInDisciplin =setAktivDiscipliner(aktivdisciplins);
-		DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+	public CompetitionSwimmer(int memberID, String name, LocalDate birthdate, boolean gender, String type, double membershipFee, boolean hasPaid, boolean[] activDisciplines, LocalTime[] bestResults){ // til at indlæse medlemmer fra fil
+		super(memberID, name,birthdate,gender,type, membershipFee, hasPaid);
+		this.activeInDisciplin =setAktivDiscipliner(activDisciplines);
+		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 		String tider="23:59:59.999";
-		LocalTime initialtider=LocalTime.parse(tider,tidsformat);
-		for (int i=0;i<4;i++){
-			if(this.aktiveInDisciplin[i]){
-				if(i==0){    //"brystsvømning=b, crawl=c, ryg=r, butterfly=f"
-					this.disciplines[i]=new SwimDisciplines("brystsvømning");
-					this.disciplines[i].getResultater().setBedsteTid(bedsteresultater[i]);
-					this.resultsInSwimDisciplines[i]=bedsteresultater[i];
-				}
-				if(i==1){
-					this.disciplines[i]=new SwimDisciplines("crawl");
-					this.disciplines[i].getResultater().setBedsteTid(bedsteresultater[i]);
-					this.resultsInSwimDisciplines[i]=bedsteresultater[i];
-				}
-				if(i==2){
-					this.disciplines[i]=new SwimDisciplines("ryg");
-					this.disciplines[i].getResultater().setBedsteTid(bedsteresultater[i]);
-					this.resultsInSwimDisciplines[i]=bedsteresultater[i];
-				}
-				if(i==3){
-					this.disciplines[i]=new SwimDisciplines("butterfly");
-					this.disciplines[i].getResultater().setBedsteTid(bedsteresultater[i]);
-					this.resultsInSwimDisciplines[i]=bedsteresultater[i];
-				}
+		LocalTime initTime=LocalTime.parse(tider,timeFormat);
+		for (int i=0;i<DISCIPLINE.values().length;i++){
+			if(this.activeInDisciplin[i]){
+				this.disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i]));
+				this.disciplines[i].getResultater().setBestTime(bestResults[i]);
+				this.resultsInSwimDisciplines[i]=bestResults[i];
 			}
 			else {
-				this.resultsInSwimDisciplines[i]=initialtider;
+				this.resultsInSwimDisciplines[i]=initTime;
 			}
-
-
 		}
 
 	}
@@ -98,8 +79,8 @@ public class CompetitionSwimmer extends Member implements Serializable {
 
 	public String toString(){
 		String a="",d="",r="";
-		for(int i=0;i<4;i++){
-			a=a.concat(aktiveInDisciplin[i]+" ");
+		for(int i=0;i<DISCIPLINE.values().length;i++){
+			a=a.concat(activeInDisciplin[i]+" ");
 			d=d.concat(disciplines[i]+" ");
 			r=r.concat(resultsInSwimDisciplines[i]+" ");
 		}
@@ -108,39 +89,43 @@ public class CompetitionSwimmer extends Member implements Serializable {
 	}
 	public boolean[] setAktivDiscipliner(String disciplinset) { //til
 		if(disciplinset.contains("b")){
-			aktiveInDisciplin[0]=true;
+			activeInDisciplin[0]=true;
 		}
 		if(disciplinset.contains("c")){
-			aktiveInDisciplin[1]=true;
+			activeInDisciplin[1]=true;
 		}
 		if(disciplinset.contains("r")){
-			aktiveInDisciplin[2]=true;
+			activeInDisciplin[2]=true;
 		}
 		if(disciplinset.contains("f")){
-			aktiveInDisciplin[3]=true;
+			activeInDisciplin[3]=true;
 		}
-		return aktiveInDisciplin;
+		return activeInDisciplin;
+	}
+
+	public void setActiveInDisciplin(boolean[] activeInDisciplin) {
+		this.activeInDisciplin = activeInDisciplin;
 	}
 
 	public boolean[] setAktivDiscipliner(boolean[] aktivdisciplins) {
-		for (int i=0;i<4;i++) {
+		for (int i=0;i<DISCIPLINE.values().length;i++) {
 			if( aktivdisciplins[i]){
-				aktiveInDisciplin[i]=true;
+				activeInDisciplin[i]=true;
 			}
 			else{
-				aktiveInDisciplin[i]=false;
+				activeInDisciplin[i]=false;
 			}
 		}
-		return aktiveInDisciplin;
+		return activeInDisciplin;
 	}
 
-	public boolean[] getAktiveInDisciplin() {
-		return aktiveInDisciplin;
+	public boolean[] getActiveInDisciplin() {
+		return activeInDisciplin;
 	}
 	public LocalTime[] getResults() {
 
-		for (int i=0;i<4;i++){
-			if(aktiveInDisciplin[i]){
+		for (int i=0;i<DISCIPLINE.values().length;i++){
+			if(activeInDisciplin[i]){
 				resultsInSwimDisciplines[i]= disciplines[i].getResultater().getResult();
 			}
 			else{
@@ -151,36 +136,34 @@ public class CompetitionSwimmer extends Member implements Serializable {
 	}
 
 
-	public void tilføjDisciplin() {
+	public void addDisciplines() {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("svømmeren er aktiv i følgende discipliner");
-		for(int i = 0; i< aktiveInDisciplin.length; i++){
-			if(aktiveInDisciplin[i]){
+		for(int i = 0; i< activeInDisciplin.length; i++){
+			if(activeInDisciplin[i]){
 				System.out.println(getDisciplines()[i].getDisciplinName());
 			}
 		}
 		System.out.println("hvilke discpliner vil du tilføje/ændre?: ");
-		System.out.println("1: brystsvømning");
-		System.out.println("2: crawl");
-		System.out.println("3: rygsvømning");
-		System.out.println("4: Butterfly");
-		int valg;
-		valg=sc.nextInt();
-		switch (valg){
-			case 1:
-				System.out.println();
-				break;
-			case 2:
-				System.out.println();
-				break;
-			case 3:
-				System.out.println();
-				break;
-			case 4:
-				System.out.println();
-				break;
+		for (int i=0;i<DISCIPLINE.values().length;i++) {
+			System.out.println(i + 1 + ": " + DISCIPLINE.values()[i]);
 		}
-	}
+
+		int choice=99;
+
+		boolean[] changeDisciplineStatus=getActiveInDisciplin();
+		while(choice!=0) {
+			choice=sc.nextInt();
+			if(choice==0){
+				break;
+			}
+			changeDisciplineStatus[choice-1]=!getActiveInDisciplin()[choice-1];
+			setActiveInDisciplin(changeDisciplineStatus);// should flip the status of
+			System.out.println("hvilke discpliner vil du tilføje/ændre? (0 for at afslutte): ");
+		}
+
+		}
+
 	public SwimDisciplines[] getDisciplines() {
 		return disciplines;
 	}

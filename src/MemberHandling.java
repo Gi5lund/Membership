@@ -11,17 +11,16 @@ import java.util.Scanner;
 
 public class MemberHandling {
     //Formandens muligheder og standardadministration
-    public static ArrayList<Member> opretMedlem(ArrayList<Member> medlemmer) {
+    public static ArrayList<Member> enrollMember(ArrayList<Member> members) {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("indtast medlemsnavn: ");
-        String navn = sc.nextLine();
+        String name = sc.nextLine();
         System.out.println(" indtast fødselsdag som YYYY-MM-DD: ");
-        //DateTimeFormatter format = DateTimeFormatter.ofPattern("YYYY-MM-DD");
-        String date = sc.next();
+        String bday = sc.next();
 
         //convert String to LocalDate
-        LocalDate bday = LocalDate.parse(date);
+        LocalDate birthdate = LocalDate.parse(bday);
 
         System.out.println(" indtast køn: M/K: ");
         boolean gender = false;
@@ -29,154 +28,70 @@ public class MemberHandling {
             gender = true;
         }
         System.out.println(" Har medlem betalt? [J/N]");
-        boolean harBetalt = false;
+        boolean hasPaid = false;
         if (sc.next().equalsIgnoreCase("J")) {
-            harBetalt = true;
+            hasPaid = true;
         }
         System.out.println("ønsker du at være aktivt medlem? [J/N]");
         if (sc.next().equalsIgnoreCase("N")) {
-            Member nytmedlem = new PassivMember(navn, bday, gender, harBetalt);
+            Member nytmedlem = new PassivMember(name, birthdate, gender, hasPaid);
             nytmedlem.setType("PassivMedlem");
 
-                skrivMedlemmerTilFil(nytmedlem);
+                FileHandler.skrivMedlemmerTilFil(nytmedlem);
 
-            medlemmer.add(nytmedlem);
-            return medlemmer;
+            members.add(nytmedlem);
+            return members;
         }
         System.out.println("ønsker du at være konkurrencesvømmer? [J/N]");
         if (sc.next().equalsIgnoreCase("n")) {
-            Member nytmedlem = new Member(navn, bday, gender, harBetalt);
-            nytmedlem.setType("Medlem");
-            skrivMedlemmerTilFil(nytmedlem);
-            medlemmer.add(nytmedlem);
-            return medlemmer;
+            Member newMember = new Member(name, birthdate, gender, hasPaid);
+            newMember.setType("Medlem");
+            FileHandler.skrivMedlemmerTilFil(newMember);
+            members.add(newMember);
+            return members;
         }
         else{
-        String aktivdisciplin = "";
+        String aktivdisciplineString = "";
         System.out.println("tast de discipliner du vil stille op i, uden komma i mellem: ");
         System.out.println("brystsvømnin=b, crawl=c, ryg=r, butterfly=f");
-        aktivdisciplin = aktivdisciplin.concat(sc.next());
+        aktivdisciplineString = aktivdisciplineString.concat(sc.next());
 
-        Member nytmedlem = new CompetitionSwimmer(navn, bday, gender, harBetalt, aktivdisciplin);
-        nytmedlem.setType("Konkurrencesvømmer");
-        skrivMedlemmerTilFil(nytmedlem);
-        medlemmer.add(nytmedlem);
+        Member newMember = new CompetitionSwimmer(name, birthdate, gender, hasPaid, aktivdisciplineString);
+        newMember.setType("Konkurrencesvømmer");
+        FileHandler.skrivMedlemmerTilFil(newMember);
+        members.add(newMember);
         }
-        return medlemmer;
+        return members;
         // tilføj nyt medlem til ArrayList
     }
 
-    public static void skrivMedlemmerTilFil(Member m){
-        try {
-            File medlemsliste = new File("medlemsliste.txt");
-            PrintStream medlemprint = new PrintStream(new FileOutputStream(medlemsliste, true));
-            medlemprint.println(m);
-        }
-        catch (Exception e){
-            System.out.println("noget gik galt i skriv til fil"+ e);
-        }
-
-
-
-    }
-    public static ArrayList<Member> indlæsMedlemmer(ArrayList<Member> medlemmer) throws FileNotFoundException {
-        DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
-        int antalMedlemmer;
-        int medlemnr;
-        String medlemnavn;
-        LocalDate bday;
-        boolean isMale;
-        String memberType;
-        double fee;
-        boolean hasPaid;
-        String line = "";
-       // ArrayList<Medlem> medlemmer = null;
-        try {
-            Scanner sc;
-            sc = new Scanner(new File("medlemsliste.txt"));
-            medlemmer = new ArrayList<>();
-
-
-            while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                Scanner nsc = new Scanner(line);
-                while (nsc.hasNext()) {
-
-                    antalMedlemmer = Integer.parseInt(String.valueOf(nsc.next()));
-                    medlemnr = Integer.parseInt(String.valueOf(nsc.next()));
-                    medlemnavn = nsc.next();
-                    bday = LocalDate.parse(nsc.next());
-                    isMale = Boolean.parseBoolean(nsc.next());
-                    memberType = nsc.next();
-                    fee = Double.parseDouble(nsc.next()); //int medlemsnummer, String navn, LocalDate foedselsdag, boolean gender, String type, double kontingent, boolean harBetalt
-                    hasPaid = Boolean.parseBoolean(nsc.next());
-                    if (memberType.equals("Medlem")) {
-                        Member nytMedlem = new Member(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid);
-                        medlemmer.add(nytMedlem);
-                    }
-                    if (memberType.equals("PassivMedlem")) {
-                        PassivMember nytmedlem = new PassivMember(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid);
-
-                    } else if (memberType.equals("Konkurrencesvømmer")){
-                        boolean[] aktivediscipliner = new boolean[4];
-                        LocalTime[] res = new LocalTime[4];
-
-                        for (int i = 0; i < 4; i++) {
-                            aktivediscipliner[i] = Boolean.parseBoolean(nsc.next());
-                        }
-                        for (int j = 0; j < 4; j++) {
-                            if (aktivediscipliner[j]) {
-                                nsc.next();
-                                res[j] = LocalTime.parse(nsc.next(), tidsformat);
-                            } else {
-                                nsc.next();
-                                res[j] = LocalTime.parse("23:59:59.999", tidsformat);
-                            }
-                        }
-                        Member nytMedlem = new CompetitionSwimmer(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid, aktivediscipliner, res);
-                        medlemmer.add(nytMedlem);
-                    }
-                    if (nsc.hasNext()) {
-                        nsc.nextLine();//tømmer linjen for input
-                    }
-
-                }
-
-            }
-
-            return medlemmer;
-        } catch (FileNotFoundException e) {
-            System.out.println("filen medlemsliste.txt blev ikke fundet");
-        }
-
-        return medlemmer;
-    }
     //Trænerens muligheder
-    public static void seTop5(ArrayList<Member> medlemmer, String discplinKønAlder) {
+    //TODO: redesign viewTop5 entirely.
+    public static void viewTop5(ArrayList<Member> members, String discplinKønAlder) {
         ArrayList<CompetitionSwimmer> top5 = new ArrayList<>();
         SortByResult sort= new SortByResult(0);
-        for (Member m:medlemmer) {
+        for (Member m:members) {
 
             if (m.getType().equals("Konkurrencesvømmer")) {
                 CompetitionSwimmer k = (CompetitionSwimmer) m;
                 if (discplinKønAlder.contains("b")) {         //Brystsvømning
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -188,22 +103,22 @@ public class MemberHandling {
 
                 if (discplinKønAlder.contains("c")) {         //crawl
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -212,22 +127,22 @@ public class MemberHandling {
                 }
                 if (discplinKønAlder.contains("r")) {         //ryg
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -236,22 +151,22 @@ public class MemberHandling {
                 }
                 if (discplinKønAlder.contains("f")) {         //butterfly
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -276,7 +191,7 @@ public class MemberHandling {
             }
         }
 
-    public static void seMedlemsListe(ArrayList<Member> members) {
+    public static void viewMembersList(ArrayList<Member> members) {
         for(Member m:members){
             System.out.println(m.printToScreen());
         }
@@ -298,7 +213,7 @@ public class MemberHandling {
 
     }
 
-    public static ArrayList<Member> redigerStamoplysninger(ArrayList<Member> members, Member m) throws FileNotFoundException {
+    public static ArrayList<Member> editPersonalInformation(ArrayList<Member> members, Member m) throws FileNotFoundException {
         Scanner sc=new Scanner(System.in);
         System.out.println(" hvilke stamoplysninger øsnker du at ændre?: ");
         System.out.println("1: ændre navn");
@@ -310,12 +225,12 @@ public class MemberHandling {
         switch (choice) {
             case 1:
                 System.out.println("indtast det nye navn");
-                String nytNavn = sc.nextLine();
-                if (nytNavn.contains(" ")) {
-                    nytNavn.replace(" ", "_");
+                String newName = sc.nextLine();
+                if (newName.contains(" ")) {
+                    newName.replace(" ", "_");
                 }
-                m.setName(nytNavn);
-                persistChanges(members);
+                m.setName(newName);
+                FileHandler.persistChanges(members);
                // return members;
                 break;
             case 2:
@@ -323,21 +238,21 @@ public class MemberHandling {
                 rep = sc.next();
                 if (rep.equalsIgnoreCase("j")) {
                     m.setType("PassivMedlem");
-                    persistChanges(members);
+                    FileHandler.persistChanges(members);
 
                 }
                     System.out.println("vil du ændre til aktivt medlemskab (Motionist)? [J/N]: ");
                     rep = sc.next();
                 if (rep.equalsIgnoreCase("j")) {
                     m.setType("Medlem");
-                    persistChanges(members);
+                    FileHandler.persistChanges(members);
 
                 }
                     System.out.println("vil du ændre til konkurrencesvømmer? ");
                     rep= sc.next();
                 if (rep.equalsIgnoreCase("j")) {
                     m.setType("Konkurrencesvømmer");
-                    persistChanges(members);
+                    FileHandler.persistChanges(members);
 
                     choice=3;
                 }
@@ -348,7 +263,7 @@ public class MemberHandling {
             case 3:
                 System.out.println("vil du tilføje discipliner");
                 CompetitionSwimmer k=(CompetitionSwimmer) m;
-                k.tilføjDisciplin();
+                k.addDisciplines();
                // return members;
                 break;
 
@@ -356,74 +271,54 @@ public class MemberHandling {
         return members;
     }
 
-    public static ArrayList<Member> persistChanges(ArrayList<Member> members){
-        File medlemsliste = new File("medlemsliste.txt");
-        PrintStream medlemprint = null;//den gamle fil overskrives
-        try {
-            medlemprint = new PrintStream(new FileOutputStream(medlemsliste));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        for (Member m : members) {
-            medlemprint.println(m);
-        }
-        medlemprint.close();
-        try {
-         return indlæsMedlemmer(members);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public static Member selectMember(ArrayList<Member> medlemmer){
-        MemberHandling.seMedlemsListe(medlemmer);
+    public static Member selectMember(ArrayList<Member> members){
+        MemberHandling.viewMembersList(members);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
         int mnr = -1;
         mnr=scn.nextInt();
-        Member m=medlemmer.get(mnr-1);
+        Member m=members.get(mnr-1);
         return m;
     }
-    public static ArrayList<Member> opdaterResultater(ArrayList<Member> medlemmer, CompetitionSwimmer k, int disciplinnummer, int trænerinput) { //del af trænerens muligheder
-        DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+    public static ArrayList<Member> updateResults(ArrayList<Member> members, CompetitionSwimmer k, int disciplinnummer, int trænerinput) { //del af trænerens muligheder
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
         Scanner sc= new Scanner(System.in);
         switch (trænerinput){
             case 1:
 
                 System.out.println("indtast træningsdato som [YYYY-MM-DD]: ");
 
-                String dato=sc.next();
-                System.out.println("indtast træningstid som [HH:MM:ss.SSS]: ");
-                String træningstid=sc.next();
-                if (LocalTime.parse(træningstid,tidsformat).compareTo(k.getDisciplines()[disciplinnummer].getResultater().getTræningstid())<0) {
-                    k.getDisciplines()[disciplinnummer].getResultater().setTræningsresultater(dato, træningstid);
-                    persistChanges(medlemmer);
+                String trainingDay=sc.next();
+                System.out.println("indtast trainingResult som [HH:MM:ss.SSS]: ");
+                String trainingResult=sc.next();
+                if (LocalTime.parse(trainingResult,timeFormat).compareTo(k.getDisciplines()[disciplinnummer].getResultater().getTrainingTime())<0) {
+                    k.getDisciplines()[disciplinnummer].getResultater().setTræningsresultater(trainingDay, trainingResult);
+                    FileHandler.persistChanges(members);
                 }
                else{
-                    System.out.println("den nye tid er ikke en forbedring");
+                    System.out.println("den nye timeResultInEvent er ikke en forbedring");
                 }
-               // return medlemmer;
+               // return members;
                 break;
             case 2:
-                System.out.println("indtast stævnenavn");
-                String stævnenavn=sc.nextLine();
-                System.out.println("indtast placering: ");
-                int placering=sc.nextInt();
-                System.out.println("indtast tid som [HH:MM:ss.SSS]:");
-                String tid=sc.next();
-                if (LocalTime.parse(tid,tidsformat).compareTo(k.getDisciplines()[disciplinnummer].getResultater().getStævnetid())<0) {
-                    k.getDisciplines()[disciplinnummer].getResultater().setStævneresultater(stævnenavn,placering,tid);
-                    persistChanges(medlemmer);
+                System.out.println("indtast competitionEventName");
+                String competitionEventName=sc.nextLine();
+                System.out.println("indtast rankInEvent: ");
+                int rankInEvent=sc.nextInt();
+                System.out.println("indtast timeResultInEvent som [HH:MM:ss.SSS]:");
+                String timeResultInEvent=sc.next();
+                if (LocalTime.parse(timeResultInEvent,timeFormat).compareTo(k.getDisciplines()[disciplinnummer].getResultater().getCompetitionEventTime())<0) {
+                    k.getDisciplines()[disciplinnummer].getResultater().setStævneresultater(competitionEventName,rankInEvent,timeResultInEvent);
+                    FileHandler.persistChanges(members);
                 }
                 else{
-                    System.out.println("den nye tid er ikke en forbedring");
+                    System.out.println("den nye timeResultInEvent er ikke en forbedring");
                 }
 
-              //  return medlemmer;
+              //  return members;
                 break;
         }
-        return medlemmer;
+        return members;
     }
 }

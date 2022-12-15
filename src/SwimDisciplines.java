@@ -21,7 +21,7 @@ public class SwimDisciplines implements Serializable {
 		this.disciplinName = disciplinName;
 		this.resultater= new Result();
 		this.currentbest=resultat;
-		this.resultater.setBedsteTid(resultat);
+		this.resultater.setBestTime(resultat);
 	}
 	public String getDisciplinName() {
 		return disciplinName;

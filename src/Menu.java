@@ -76,13 +76,13 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
                         //return medlemmer;
                         break;
                     case 1:
-                        medlemmer = MemberHandling.opretMedlem(medlemmer);
+                        medlemmer = MemberHandling.enrollMember(medlemmer);
                         //return medlemmer;
                         break;
                     case 2:
                         Member m= MemberHandling.selectMember(medlemmer);
                         try{
-                        medlemmer= MemberHandling.redigerStamoplysninger(medlemmer,m);
+                        medlemmer= MemberHandling.editPersonalInformation(medlemmer,m);
 
                         } catch (FileNotFoundException e) {
                             System.out.println("hovsa: "+e);
@@ -129,13 +129,13 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
                         hovedmenu(medlemmer);
                         break;
                     case 1:
-                        Kontingenter.seRestance(medlemmer);
+                        MembershipFeesHandler.viewFeeOverdueList(medlemmer);
                         break;
                     case 2:
-                        Kontingenter.registerPayment(medlemmer);
+                        MembershipFeesHandler.registerPayment(medlemmer);
                         break;
                     case 3:
-                        Kontingenter.membershipFeesList(medlemmer);
+                        MembershipFeesHandler.membershipFeesList(medlemmer);
                         break;
                     default:
                         System.out.println("Forkert indtastning, tast 1,2 eller 3.");
@@ -193,7 +193,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
 
     public static ArrayList<Member> opretMedlem(ArrayList<Member> medlemmer) {
 
-        medlemmer = MemberHandling.opretMedlem(medlemmer);
+        medlemmer = MemberHandling.enrollMember(medlemmer);
 
         return medlemmer;
 
@@ -202,7 +202,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
 
 
     public static ArrayList<Member> sletMedlem(ArrayList<Member> medlemmer) {
-        MemberHandling.seMedlemsListe( medlemmer);
+        MemberHandling.viewMembersList( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
@@ -214,11 +214,11 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
 
     public static void medlemsliste( ArrayList<Member> medlemmer) {
           System.out.println("Kald medlemsliste");
-          MemberHandling.seMedlemsListe( medlemmer);
+          MemberHandling.viewMembersList( medlemmer);
           hovedmenu(medlemmer);
     }
     public static ArrayList<Member> opdaterResultater(ArrayList<Member> medlemmer) {
-        MemberHandling.seMedlemsListe( medlemmer);
+        MemberHandling.viewMembersList( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
@@ -251,7 +251,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
         System.out.println("tast 1 for træningsresultat, tast 2 for stævneresultat");
         int trænerinput=scn.nextInt();
         //opdaterResultater(Konkurrencesvømmer k, int disciplinnummer, int trænerinput)
-        return MemberHandling.opdaterResultater(medlemmer,k,disciplinnummer,trænerinput);
+        return MemberHandling.updateResults(medlemmer,k,disciplinnummer,trænerinput);
     }
 
     public static void seTopFem(ArrayList<Member> medlemmer) {
@@ -263,7 +263,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
         topFem = kon(scn, topFem,medlemmer);
         topFem = alder(scn, topFem,medlemmer);
 
-        MemberHandling.seTop5(medlemmer,topFem);
+        MemberHandling.viewTop5(medlemmer,topFem);
     }
 
     public static void redDisciplin() {
