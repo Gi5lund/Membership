@@ -12,7 +12,7 @@ public class CompetitionSwimmer extends Member implements Serializable {
 
 	private SwimDisciplines[] disciplines =new SwimDisciplines[DISCIPLINE.values().length];
 	private LocalTime[] resultsInSwimDisciplines =new LocalTime[DISCIPLINE.values().length];
-	transient DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+	public static DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 	//constructors. in order to be able to serialize/deserialize a no-argument constructor must be available
 	public CompetitionSwimmer(){
 		super();
@@ -24,28 +24,18 @@ public class CompetitionSwimmer extends Member implements Serializable {
 
 	}
 	// til at nyoprette et medlem
-	public CompetitionSwimmer(String navn, LocalDate bday, boolean gender, boolean harBetalt, String disciplinset){ //til at oprette nye medlemmer
-		super(navn,bday,gender, harBetalt);
+	public CompetitionSwimmer(String name, LocalDate bday, boolean gender, boolean hasPaid, String disciplinset){ //til at oprette nye medlemmer
+		super(name,bday,gender, hasPaid);
 		this.activeInDisciplin =setAktivDiscipliner(disciplinset);
-		 DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS"); //TODO: TRY MOVE DATETIMEFORMATTER OUTSIDE AS STATIC
+		// DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS"); //TODO: TRY MOVE DATETIMEFORMATTER OUTSIDE AS STATIC
 		String initTime="23:59:59.000";
 		LocalTime initialtime=LocalTime.parse(initTime,timeFormat);
 		//************* TODO: REWRITE THIS PART TO ACOMMODATE TO ENUM DISCPILINE! **********
 		for (int i=0;i<DISCIPLINE.values().length;i++){
 			if(activeInDisciplin[i]){
-				if(i==0){    //"brystsvømning=b, crawl=c, ryg=r, butterfly=f"
-					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i])); //should be breasstroke
+				   //"brystsvømning=b, crawl=c, ryg=r, butterfly=f"
+					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i])); //should be breaststroke for i=0
 				}
-				if(i==1){
-					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i]));// should be crawl
-				}
-				if(i==2){
-					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i]));//should be backcrawl
-				}
-				if(i==3){
-					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i])); //should be butterfly
-				}
-			}
 			resultsInSwimDisciplines[i]=initialtime;
 		}
 
@@ -84,8 +74,8 @@ public class CompetitionSwimmer extends Member implements Serializable {
 			d=d.concat(disciplines[i]+" ");
 			r=r.concat(resultsInSwimDisciplines[i]+" ");
 		}
-		String s=super.toString()+" "+a+" "+d+" "+r;
-		return s;
+		return super.toString()+" "+a+" "+d+" "+r;
+
 	}
 	public boolean[] setAktivDiscipliner(String disciplinset) { //til
 		if(disciplinset.contains("b")){
@@ -160,6 +150,7 @@ public class CompetitionSwimmer extends Member implements Serializable {
 			changeDisciplineStatus[choice-1]=!getActiveInDisciplin()[choice-1];
 			setActiveInDisciplin(changeDisciplineStatus);// should flip the status of
 			System.out.println("hvilke discpliner vil du tilføje/ændre? (0 for at afslutte): ");
+			choice= sc.nextInt();
 		}
 
 		}

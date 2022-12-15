@@ -1,7 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,22 +8,22 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-    public static ArrayList<Member> indlæsMedlemmer(ArrayList<Member> medlemmer) throws FileNotFoundException {
+    public static ArrayList<Member> loadMembers(ArrayList<Member> members) throws FileNotFoundException {
         DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
         int antalMedlemmer;
-        int medlemnr;
-        String medlemnavn;
+        int memberID;
+        String memberName;
         LocalDate bday;
         boolean isMale;
         String memberType;
         double fee;
         boolean hasPaid;
         String line = "";
-       // ArrayList<Medlem> medlemmer = null;
+       // ArrayList<Medlem> members = null;
         try {
             Scanner sc;
             sc = new Scanner(new File("medlemsliste.txt"));
-            medlemmer = new ArrayList<>();
+            members = new ArrayList<>();
 
 
             while (sc.hasNextLine()) {
@@ -34,23 +32,23 @@ public class FileHandler {
                 while (nsc.hasNext()) {
 
                     antalMedlemmer = Integer.parseInt(String.valueOf(nsc.next()));
-                    medlemnr = Integer.parseInt(String.valueOf(nsc.next()));
-                    medlemnavn = nsc.next();
+                    memberID = Integer.parseInt(String.valueOf(nsc.next()));
+                    memberName = nsc.next();
                     bday = LocalDate.parse(nsc.next());
                     isMale = Boolean.parseBoolean(nsc.next());
                     memberType = nsc.next();
                     fee = Double.parseDouble(nsc.next()); //int medlemsnummer, String navn, LocalDate foedselsdag, boolean gender, String type, double kontingent, boolean harBetalt
                     hasPaid = Boolean.parseBoolean(nsc.next());
                     if (memberType.equals("Medlem")) {
-                        Member nytMedlem = new Member(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid);
-                        medlemmer.add(nytMedlem);
+                        Member newMember = new Member(memberID, memberName, bday, isMale, memberType, fee, hasPaid);
+                        members.add(newMember);
                     }
                     if (memberType.equals("PassivMedlem")) {
-                        PassivMember nytmedlem = new PassivMember(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid);
+                        PassivMember newMember = new PassivMember(memberID, memberName, bday, isMale, memberType, fee, hasPaid);
 
                     } else if (memberType.equals("Konkurrencesvømmer")){
-                        boolean[] aktivediscipliner = new boolean[4];
-                        LocalTime[] res = new LocalTime[4];
+                        boolean[] aktivediscipliner = new boolean[DISCIPLINE.values().length];
+                        LocalTime[] res = new LocalTime[DISCIPLINE.values().length];
 
                         for (int i = 0; i < 4; i++) {
                             aktivediscipliner[i] = Boolean.parseBoolean(nsc.next());
@@ -64,8 +62,8 @@ public class FileHandler {
                                 res[j] = LocalTime.parse("23:59:59.999", tidsformat);
                             }
                         }
-                        Member nytMedlem = new CompetitionSwimmer(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid, aktivediscipliner, res);
-                        medlemmer.add(nytMedlem);
+                        Member newMember = new CompetitionSwimmer(memberID, memberName, bday, isMale, memberType, fee, hasPaid, aktivediscipliner, res);
+                        members.add(newMember);
                     }
                     if (nsc.hasNext()) {
                         nsc.nextLine();//tømmer linjen for input
@@ -75,15 +73,15 @@ public class FileHandler {
 
             }
 
-            return medlemmer;
+            return members;
         } catch (FileNotFoundException e) {
             System.out.println("filen medlemsliste.txt blev ikke fundet");
         }
 
-        return medlemmer;
+        return members;
     }
 
-    public static void skrivMedlemmerTilFil(Member m){
+    public static void writeNewMemberToFile(Member m){
         try {
             File medlemsliste = new File("medlemsliste.txt");
             PrintStream medlemprint = new PrintStream(new FileOutputStream(medlemsliste, true));
@@ -98,7 +96,7 @@ public class FileHandler {
     }
 
     public static ArrayList<Member> persistChanges(ArrayList<Member> members){
-        File medlemsliste = new File("medlemsliste.txt");
+        File medlemsliste = new File("medlemsliste.ny");
         PrintStream medlemprint = null;//den gamle fil overskrives
         try {
             medlemprint = new PrintStream(new FileOutputStream(medlemsliste));
@@ -109,8 +107,22 @@ public class FileHandler {
             medlemprint.println(m);
         }
         medlemprint.close();
+        File memberslist=new File("medlemsliste.txt");
+        File backup=new File("medlemsliste.old");
+        if(medlemsliste.exists()&&memberslist.exists()&& backup.exists()){
+            Path oldsource= Paths.get("medlemsliste.txt");
+            Path target=Paths.get("medlemsliste.old");
+            Path newsource=Paths.get("medlemsliste.ny");
+            try{
+                Files.move(oldsource,target, StandardCopyOption.REPLACE_EXISTING);
+                Files.move(newsource,oldsource,StandardCopyOption.REPLACE_EXISTING);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
         try {
-         return indlæsMedlemmer(members);
+         return loadMembers(members);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

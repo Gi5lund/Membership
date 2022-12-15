@@ -10,7 +10,7 @@ public class Delfinen {
 		File memberlist=new File("medlemsliste.txt");
 		if (memberlist.exists()) {
 			System.out.println("filen findes");
-			 members= FileHandler.indlæsMedlemmer(members);
+			 members= FileHandler.loadMembers(members);
 		}
 		else {
 			System.out.println("filen oprettes");
@@ -32,11 +32,12 @@ public class Delfinen {
 
 		}
 		//***************** MENU - TO BE REDESIGNED ***************
-		//Menu.hovedmenu(members);
+
 
 		*/
+		Menu.hovedmenu(members);
 		//*************** TEST OF ENUM *************************
-		System.out.println(DISCIPLINE.values().length);
+		//System.out.println(DISCIPLINE.values().length);
 		System.out.println("hej");
 	}
 }

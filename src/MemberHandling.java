@@ -37,7 +37,7 @@ public class MemberHandling {
             Member nytmedlem = new PassivMember(name, birthdate, gender, hasPaid);
             nytmedlem.setType("PassivMedlem");
 
-                FileHandler.skrivMedlemmerTilFil(nytmedlem);
+                FileHandler.writeNewMemberToFile(nytmedlem);
 
             members.add(nytmedlem);
             return members;
@@ -46,7 +46,7 @@ public class MemberHandling {
         if (sc.next().equalsIgnoreCase("n")) {
             Member newMember = new Member(name, birthdate, gender, hasPaid);
             newMember.setType("Medlem");
-            FileHandler.skrivMedlemmerTilFil(newMember);
+            FileHandler.writeNewMemberToFile(newMember);
             members.add(newMember);
             return members;
         }
@@ -58,7 +58,7 @@ public class MemberHandling {
 
         Member newMember = new CompetitionSwimmer(name, birthdate, gender, hasPaid, aktivdisciplineString);
         newMember.setType("Konkurrencesvømmer");
-        FileHandler.skrivMedlemmerTilFil(newMember);
+        FileHandler.writeNewMemberToFile(newMember);
         members.add(newMember);
         }
         return members;
