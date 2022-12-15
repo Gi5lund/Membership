@@ -29,24 +29,24 @@ public class CompetitionSwimmer extends Member implements Serializable {
 		this.aktiveInDisciplin =setAktivDiscipliner(disciplinset);
 		 DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS"); //TODO: TRY MOVE DATETIMEFORMATTER OUTSIDE AS STATIC
 		String tider="23:59:59.000";
-		LocalTime initialtider=LocalTime.parse(tider,timeFormat);
+		LocalTime initialtime=LocalTime.parse(tider,timeFormat);
 		//************* TODO: REWRITE THIS PART TO ACOMMODATE TO ENUM DISCPILINE! **********
 		for (int i=0;i<DISCIPLINE.values().length;i++){
 			if(aktiveInDisciplin[i]){
 				if(i==0){    //"brystsvømning=b, crawl=c, ryg=r, butterfly=f"
-					disciplines[i]=new SwimDisciplines("brystsvømning");
+					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i])); //should be breasstroke
 				}
 				if(i==1){
-					disciplines[i]=new SwimDisciplines("crawl");
+					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i]));// should be crawl
 				}
 				if(i==2){
-					disciplines[i]=new SwimDisciplines("ryg");
+					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i]));//should be backcrawl
 				}
 				if(i==3){
-					disciplines[i]=new SwimDisciplines("butterfly");
+					disciplines[i]=new SwimDisciplines(String.valueOf(DISCIPLINE.values()[i])); //should be butterfly
 				}
 			}
-			resultsInSwimDisciplines[i]=initialtider;
+			resultsInSwimDisciplines[i]=initialtime;
 		}
 
 
