@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class SortByResult implements Comparator<Konkurrencesvømmer> {
+public class SortByResult implements Comparator<CompetitionSwimmer> {
 
     public void setIndex(int index) {
         this.index = index;
@@ -14,7 +14,7 @@ public class SortByResult implements Comparator<Konkurrencesvømmer> {
     public int getIndex(){
         return index;
     }
-    public int compare(Konkurrencesvømmer a, Konkurrencesvømmer b){
+    public int compare(CompetitionSwimmer a, CompetitionSwimmer b){
 
       return  a.getResults()[getIndex()].compareTo(b.getResults()[getIndex()]);
     }

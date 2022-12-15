@@ -11,7 +11,7 @@ public class Member implements Serializable {
 	private int memberID;
 	private String name;
 	private LocalDate birthday;
-	private boolean male;
+	private boolean genderIsMale;
 	private String type = "";
 	private double membershipFee = 0;
 	private boolean membershipPaid;
@@ -23,35 +23,35 @@ public class Member implements Serializable {
 
 		this.name = "Fornavn";
 		this.birthday = LocalDate.now();
-		this.male = false;
+		this.genderIsMale = false;
 		this.membershipPaid = false;
 		this.type = "Medlemstype";
 		this.membershipFee = this.calculateMembershipFee();
 	}
 
-	public Member(String name, LocalDate birthday, boolean male, boolean membershipPaid) {
+	public Member(String name, LocalDate birthday, boolean genderIsMale, boolean membershipPaid) {
 		memberID = memberTotal + 1;
 		memberTotal++;
 		this.name = name;
 		this.birthday = birthday;
-		this.male = male;
+		this.genderIsMale = genderIsMale;
 		this.membershipPaid = membershipPaid;
 		this.membershipFee = this.calculateMembershipFee();
 	}
 
-	public Member(int memberID, String name, LocalDate birthday, boolean male, String type, double membershipFee, boolean membershipPaid) {
+	public Member(int memberID, String name, LocalDate birthday, boolean genderIsMale, String type, double membershipFee, boolean membershipPaid) {
 		this.memberID = memberID;
 		memberTotal++;
 		this.name = name;
 		this.birthday = birthday;
-		this.male = male;
+		this.genderIsMale = genderIsMale;
 		this.type = type;
 		this.membershipFee = membershipFee;
 		this.membershipPaid = membershipPaid;
 	}
 
 	public boolean isMale() {
-		return male;
+		return genderIsMale;
 	}
 
 	public String getType() {
@@ -70,10 +70,9 @@ public class Member implements Serializable {
 	 * @param birthday
 	 */
 	public static int getAge(LocalDate birthday) {
-		// TODO - implement Medlem.getAlder
 
 		LocalDate today = LocalDate.now();
-		LocalDate birthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDayOfMonth());
+		//LocalDate birthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDayOfMonth());
 		Period period = Period.between(birthday, today);
 		return period.getYears();
 	}
@@ -100,7 +99,7 @@ public class Member implements Serializable {
 	}
 
 	public String toString() {
-		String s = memberTotal + " " + memberID + " " + name + " " + birthday + " " + male + " " + type + " " + membershipFee + " " + membershipPaid;
+		String s = memberTotal + " " + memberID + " " + name + " " + birthday + " " + genderIsMale + " " + type + " " + membershipFee + " " + membershipPaid;
 		return s;
 	}
 

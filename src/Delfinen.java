@@ -5,24 +5,25 @@ public class Delfinen {
 
 
 	public static void main(String[] args) throws Exception {
-		 ArrayList<Member> medlemmer=new ArrayList<>();
+		 ArrayList<Member> members=new ArrayList<>();
 
 		File memberlist=new File("medlemsliste.txt");
 		if (memberlist.exists()) {
 			System.out.println("filen findes");
-			 medlemmer=Medlemsadministration.indlæsMedlemmer(medlemmer);
+			 members= MemberHandling.indlæsMedlemmer(members);
 		}
 		else {
 			System.out.println("filen oprettes");
-			 medlemmer=new ArrayList<>();
+			 members=new ArrayList<>();
 
-			medlemmer.add(new Member());
+			members.add(new Member());
 
-		}
-		String filename="medlemmer.ser";
-		for(int i=0;i<medlemmer.size();i++){
+		}/*
+		//****************** TEST OF SERIALIZATIONUTIL **********************
+		String filename="members.ser";
+		for(int i=0;i<members.size();i++){
 			try {
-				SerializationUtil.serialize( medlemmer.get(i),filename);
+				SerializationUtil.serialize( members.get(i),filename);
 			}
 			catch ( IOException e) {
 				e.printStackTrace();
@@ -30,18 +31,12 @@ public class Delfinen {
 			}
 
 		}
-		/* her vil jeg oprette 5 forskellige konkurrencesvømmere og prøve at benytte serialization/deserialization
-		til at persistere mine objekter
-				String filename="medlemmer.ser";
-		String ksvimname="k";
-		for(int i=0;i<5;i++){
-		ksvimname=ksvimname+i;
-		Konkurrencesvømmer k=new Konkurrencesvømmer()
-		}
+		//***************** MENU - TO BE REDESIGNED ***************
+		//Menu.hovedmenu(members);
+
 		*/
-		//Menu.hovedmenu(medlemmer);
-
-
+		//*************** TEST OF ENUM *************************
+		System.out.println(DISCIPLINE.values().length);
 		System.out.println("hej");
 	}
 }

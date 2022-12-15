@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Kontingenter {
     public static void seRestance(ArrayList<Member> medlemmer) {
@@ -12,8 +11,8 @@ public class Kontingenter {
 
     public static ArrayList<Member> registerPayment(ArrayList<Member> medlemmer) {
 
-             Medlemsadministration.selectMember(medlemmer).setHasPaid();
-             Medlemsadministration.persistChanges(medlemmer);
+             MemberHandling.selectMember(medlemmer).setHasPaid();
+             MemberHandling.persistChanges(medlemmer);
         return medlemmer;
 
     }
@@ -21,7 +20,7 @@ public class Kontingenter {
 
         System.out.println("Det koster ekstra");
         for (Member m:medlemmer){
-            System.out.print(m.getMemberID()+" "+m.getMemberName()+": " m.calculateMembershipFee());
+            System.out.print(m.getMemberID()+" "+m.getMemberName()+": "+m.calculateMembershipFee());
         }
     }
     }

@@ -76,13 +76,13 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
                         //return medlemmer;
                         break;
                     case 1:
-                        medlemmer = Medlemsadministration.opretMedlem(medlemmer);
+                        medlemmer = MemberHandling.opretMedlem(medlemmer);
                         //return medlemmer;
                         break;
                     case 2:
-                        Member m=Medlemsadministration.selectMember(medlemmer);
+                        Member m= MemberHandling.selectMember(medlemmer);
                         try{
-                        medlemmer=Medlemsadministration.redigerStamoplysninger(medlemmer,m);
+                        medlemmer= MemberHandling.redigerStamoplysninger(medlemmer,m);
 
                         } catch (FileNotFoundException e) {
                             System.out.println("hovsa: "+e);
@@ -179,7 +179,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
                         redDisciplin();
                         break;
                     case 4:
-                        Konkurrencesvømmer.konkurrencesvoemmerliste(medlemmer);
+                        CompetitionSwimmer.konkurrencesvoemmerliste(medlemmer);
                         break;
                     default:
                         System.out.println("Forkert indtastning, tast 1,2,3 eller 4.");
@@ -193,7 +193,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
 
     public static ArrayList<Member> opretMedlem(ArrayList<Member> medlemmer) {
 
-        medlemmer = Medlemsadministration.opretMedlem(medlemmer);
+        medlemmer = MemberHandling.opretMedlem(medlemmer);
 
         return medlemmer;
 
@@ -202,30 +202,30 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
 
 
     public static ArrayList<Member> sletMedlem(ArrayList<Member> medlemmer) {
-        Medlemsadministration.seMedlemsListe( medlemmer);
+        MemberHandling.seMedlemsListe( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
         int mnr = -1;
         mnr=scn.nextInt();
-        medlemmer= Medlemsadministration.deleteMember( medlemmer,mnr);
+        medlemmer= MemberHandling.deleteMember( medlemmer,mnr);
         return medlemmer;
     }
 
     public static void medlemsliste( ArrayList<Member> medlemmer) {
           System.out.println("Kald medlemsliste");
-          Medlemsadministration.seMedlemsListe( medlemmer);
+          MemberHandling.seMedlemsListe( medlemmer);
           hovedmenu(medlemmer);
     }
     public static ArrayList<Member> opdaterResultater(ArrayList<Member> medlemmer) {
-        Medlemsadministration.seMedlemsListe( medlemmer);
+        MemberHandling.seMedlemsListe( medlemmer);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
         int mnr = -1;
         mnr=scn.nextInt();
 
-        Konkurrencesvømmer k=(Konkurrencesvømmer) medlemmer.get(mnr-1);
+        CompetitionSwimmer k=(CompetitionSwimmer) medlemmer.get(mnr-1);
 
         System.out.println("hvilke discpliner vil tilføje/ændre?: ");
         System.out.println("1: brystsvømning");
@@ -251,7 +251,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
         System.out.println("tast 1 for træningsresultat, tast 2 for stævneresultat");
         int trænerinput=scn.nextInt();
         //opdaterResultater(Konkurrencesvømmer k, int disciplinnummer, int trænerinput)
-        return Medlemsadministration.opdaterResultater(medlemmer,k,disciplinnummer,trænerinput);
+        return MemberHandling.opdaterResultater(medlemmer,k,disciplinnummer,trænerinput);
     }
 
     public static void seTopFem(ArrayList<Member> medlemmer) {
@@ -263,7 +263,7 @@ public ArrayList<Member> medlemmer=new ArrayList<>();
         topFem = kon(scn, topFem,medlemmer);
         topFem = alder(scn, topFem,medlemmer);
 
-        Medlemsadministration.seTop5(medlemmer,topFem);
+        MemberHandling.seTop5(medlemmer,topFem);
     }
 
     public static void redDisciplin() {

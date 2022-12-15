@@ -6,22 +6,17 @@ import java.time.format.DateTimeFormatter;
 public class Result implements Serializable {
 
 	private LocalDate træningsdato=LocalDate.now();
-
-	public LocalTime getTræningstid() {
-		return træningstid;
-	}
-
-	public LocalTime getStævnetid() {
-		return stævnetid;
-	}
-
 	private LocalTime træningstid;
 	private String stævnenavn="ikke deltaget i stævne endnu";
 	private int placering=-99;
 	private LocalTime stævnetid;
-
 	private LocalTime bedsteTid;
 	transient DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
+
+
+
+
+
 
 	public Result(){
 
@@ -70,7 +65,17 @@ public class Result implements Serializable {
 		return this.bedsteTid.format(tidsformat);
 
 	}
+	public LocalTime getTræningstid() {
+		return træningstid;
+	}
 	public void setBedsteTid(LocalTime res){
 		this.bedsteTid=res;
 	}
+	public LocalTime getStævnetid() {
+		return stævnetid;
+	}
+
+
+
+
 }

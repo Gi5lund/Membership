@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Medlemsadministration {
+public class MemberHandling {
     //Formandens muligheder og standardadministration
     public static ArrayList<Member> opretMedlem(ArrayList<Member> medlemmer) {
 
@@ -57,7 +57,7 @@ public class Medlemsadministration {
         System.out.println("brystsvømnin=b, crawl=c, ryg=r, butterfly=f");
         aktivdisciplin = aktivdisciplin.concat(sc.next());
 
-        Member nytmedlem = new Konkurrencesvømmer(navn, bday, gender, harBetalt, aktivdisciplin);
+        Member nytmedlem = new CompetitionSwimmer(navn, bday, gender, harBetalt, aktivdisciplin);
         nytmedlem.setType("Konkurrencesvømmer");
         skrivMedlemmerTilFil(nytmedlem);
         medlemmer.add(nytmedlem);
@@ -133,7 +133,7 @@ public class Medlemsadministration {
                                 res[j] = LocalTime.parse("23:59:59.999", tidsformat);
                             }
                         }
-                        Member nytMedlem = new Konkurrencesvømmer(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid, aktivediscipliner, res);
+                        Member nytMedlem = new CompetitionSwimmer(medlemnr, medlemnavn, bday, isMale, memberType, fee, hasPaid, aktivediscipliner, res);
                         medlemmer.add(nytMedlem);
                     }
                     if (nsc.hasNext()) {
@@ -153,30 +153,30 @@ public class Medlemsadministration {
     }
     //Trænerens muligheder
     public static void seTop5(ArrayList<Member> medlemmer, String discplinKønAlder) {
-        ArrayList<Konkurrencesvømmer> top5 = new ArrayList<>();
+        ArrayList<CompetitionSwimmer> top5 = new ArrayList<>();
         SortByResult sort= new SortByResult(0);
         for (Member m:medlemmer) {
 
             if (m.getType().equals("Konkurrencesvømmer")) {
-                Konkurrencesvømmer k = (Konkurrencesvømmer) m;
+                CompetitionSwimmer k = (CompetitionSwimmer) m;
                 if (discplinKønAlder.contains("b")) {         //Brystsvømning
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -188,22 +188,22 @@ public class Medlemsadministration {
 
                 if (discplinKønAlder.contains("c")) {         //crawl
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -212,22 +212,22 @@ public class Medlemsadministration {
                 }
                 if (discplinKønAlder.contains("r")) {         //ryg
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -236,22 +236,22 @@ public class Medlemsadministration {
                 }
                 if (discplinKønAlder.contains("f")) {         //butterfly
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getAktivdisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getAktivdisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getAktiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getAktivdisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getAktivdisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getAktiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -347,7 +347,7 @@ public class Medlemsadministration {
                     break;
             case 3:
                 System.out.println("vil du tilføje discipliner");
-                Konkurrencesvømmer k=(Konkurrencesvømmer) m;
+                CompetitionSwimmer k=(CompetitionSwimmer) m;
                 k.tilføjDisciplin();
                // return members;
                 break;
@@ -377,7 +377,7 @@ public class Medlemsadministration {
     }
 
     public static Member selectMember(ArrayList<Member> medlemmer){
-        Medlemsadministration.seMedlemsListe(medlemmer);
+        MemberHandling.seMedlemsListe(medlemmer);
         System.out.println("Indtast medlemsnummer");
 
         Scanner scn = new Scanner(System.in);
@@ -386,7 +386,7 @@ public class Medlemsadministration {
         Member m=medlemmer.get(mnr-1);
         return m;
     }
-    public static ArrayList<Member> opdaterResultater(ArrayList<Member> medlemmer, Konkurrencesvømmer k, int disciplinnummer, int trænerinput) { //del af trænerens muligheder
+    public static ArrayList<Member> opdaterResultater(ArrayList<Member> medlemmer, CompetitionSwimmer k, int disciplinnummer, int trænerinput) { //del af trænerens muligheder
         DateTimeFormatter tidsformat = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
         Scanner sc= new Scanner(System.in);
         switch (trænerinput){
@@ -397,8 +397,8 @@ public class Medlemsadministration {
                 String dato=sc.next();
                 System.out.println("indtast træningstid som [HH:MM:ss.SSS]: ");
                 String træningstid=sc.next();
-                if (LocalTime.parse(træningstid,tidsformat).compareTo(k.getDiscipliner()[disciplinnummer].getResultater().getTræningstid())<0) {
-                    k.getDiscipliner()[disciplinnummer].getResultater().setTræningsresultater(dato, træningstid);
+                if (LocalTime.parse(træningstid,tidsformat).compareTo(k.getDisciplines()[disciplinnummer].getResultater().getTræningstid())<0) {
+                    k.getDisciplines()[disciplinnummer].getResultater().setTræningsresultater(dato, træningstid);
                     persistChanges(medlemmer);
                 }
                else{
@@ -413,8 +413,8 @@ public class Medlemsadministration {
                 int placering=sc.nextInt();
                 System.out.println("indtast tid som [HH:MM:ss.SSS]:");
                 String tid=sc.next();
-                if (LocalTime.parse(tid,tidsformat).compareTo(k.getDiscipliner()[disciplinnummer].getResultater().getStævnetid())<0) {
-                    k.getDiscipliner()[disciplinnummer].getResultater().setStævneresultater(stævnenavn,placering,tid);
+                if (LocalTime.parse(tid,tidsformat).compareTo(k.getDisciplines()[disciplinnummer].getResultater().getStævnetid())<0) {
+                    k.getDisciplines()[disciplinnummer].getResultater().setStævneresultater(stævnenavn,placering,tid);
                     persistChanges(medlemmer);
                 }
                 else{
