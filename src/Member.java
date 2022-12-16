@@ -110,8 +110,19 @@ public class Member implements Serializable {
 		} else {
 			gender = "Female";
 		}
-		String s = memberID + " | " + name + " | " + Member.getAge(this.getBirthday()) + " | " + gender + " | " + membershipPaid;
-		return s;
+		String dues="";
+		if (getMembershipPaid()){
+			dues="Paid";
+		}
+		else{
+			dues="Overdue";
+		}
+		String displayName= name;
+		if(name.contains("_")){
+			displayName.replace("_"," ");
+		}
+		return memberID + " | " + displayName + " | " + Member.getAge(this.getBirthday()) + " | " + gender + " | " + dues;
+
 	}
 
 

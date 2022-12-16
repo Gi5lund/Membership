@@ -16,6 +16,9 @@ public class MemberHandling {
         Scanner sc = new Scanner(System.in);
         System.out.println("indtast medlemsnavn: ");
         String name = sc.nextLine();
+        if(name.contains(" ")){
+            name.replace(" ","_");
+        }
         System.out.println(" indtast fødselsdag som YYYY-MM-DD: ");
         String bday = sc.next();
 
