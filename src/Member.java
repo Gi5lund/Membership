@@ -7,13 +7,14 @@ import java.time.Period;
 public class Member implements Serializable {
 	private static int memberTotal = 0;
 
+	@Serial
 	private static final long serialVersionUID = -9177640809256836733L;
-	private int memberID;
+	private final int memberID;
 	private String name;
-	private LocalDate birthday;
-	private boolean genderIsMale;
+	private final LocalDate birthday;
+	private final boolean genderIsMale;
 	private String type = "";
-	private double membershipFee = 0;
+	private double membershipFee;
 	private boolean membershipPaid;
 
 
