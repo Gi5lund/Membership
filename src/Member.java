@@ -2,7 +2,6 @@
 
 import java.io.*;
 import java.time.LocalDate;
-import java.time.Period;
 
 public class Member implements Serializable {
 	private static int memberTotal = 0;
@@ -10,9 +9,9 @@ public class Member implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -9177640809256836733L;
 	private final int memberID;
-	private String name;
-	private final LocalDate birthday;
-	private final boolean genderIsMale;
+	private PersonalInformation personaldata;
+
+
 	private String type = "";
 	private double membershipFee;
 	private boolean membershipPaid;
@@ -21,10 +20,7 @@ public class Member implements Serializable {
 	//Constructors. no-arg constructor must be available
 	public Member() {
 		this.memberID = 1;
-
-		this.name = "Fornavn";
-		this.birthday = LocalDate.now();
-		this.genderIsMale = false;
+		this.personaldata=new PersonalInformation();
 		this.membershipPaid = false;
 		this.type = "Medlemstype";
 		this.membershipFee = this.calculateMembershipFee();
@@ -33,9 +29,10 @@ public class Member implements Serializable {
 	public Member(String name, LocalDate birthday, boolean genderIsMale, boolean membershipPaid) {
 		memberID = memberTotal + 1;
 		memberTotal++;
-		this.name = name;
-		this.birthday = birthday;
-		this.genderIsMale = genderIsMale;
+		this.personaldata=new PersonalInformation();
+		personaldata.setFirstname(name);
+		personaldata.setBirthdate(birthday);
+		personaldata.setGenderIsMale(genderIsMale);
 		this.membershipPaid = membershipPaid;
 		this.membershipFee = this.calculateMembershipFee();
 	}
@@ -43,16 +40,17 @@ public class Member implements Serializable {
 	public Member(int memberID, String name, LocalDate birthday, boolean genderIsMale, String type, double membershipFee, boolean membershipPaid) {
 		this.memberID = memberID;
 		memberTotal++;
-		this.name = name;
-		this.birthday = birthday;
-		this.genderIsMale = genderIsMale;
+		this.personaldata=new PersonalInformation();
+		personaldata.setFirstname(name);
+		personaldata.setBirthdate(birthday);
+		personaldata.setGenderIsMale(genderIsMale);
 		this.type = type;
 		this.membershipFee = membershipFee;
 		this.membershipPaid = membershipPaid;
 	}
 
 	public boolean isMale() {
-		return genderIsMale;
+		return personaldata.isMale();
 	}
 
 	public String getType() {
@@ -67,19 +65,8 @@ public class Member implements Serializable {
 		this.type = type;
 	}
 
-	/**
-	 * @param birthday
-	 */
-	public static int getAge(LocalDate birthday) {
-
-		LocalDate today = LocalDate.now();
-		//LocalDate birthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDayOfMonth());
-		Period period = Period.between(birthday, today);
-		return period.getYears();
-	}
-
 	public LocalDate getBirthday() {
-		return birthday;
+		return personaldata.getBirthdate();
 	}
 
 	public boolean getMembershipPaid() {
@@ -90,9 +77,9 @@ public class Member implements Serializable {
 		double discount = 0.75;
 		double fee = 1600;
 		double feeYouthmember = 1000;
-		if (getAge(getBirthday()) > 60) {
+		if (PersonalInformation.getAge(getBirthday()) > 60) {
 			return discount * fee;
-		} else if (getAge(getBirthday()) < 18) {
+		} else if (PersonalInformation.getAge(getBirthday()) < 18) {
 			return feeYouthmember;
 		} else {
 			return fee;
@@ -100,7 +87,7 @@ public class Member implements Serializable {
 	}
 
 	public String toString() {
-		String s = memberTotal + " " + memberID + " " + name + " " + birthday + " " + genderIsMale + " " + type + " " + membershipFee + " " + membershipPaid;
+		String s = memberTotal + " " + memberID + " " + personaldata + " "  + type + " " + membershipFee + " " + membershipPaid;
 		return s;
 	}
 
@@ -122,7 +109,7 @@ public class Member implements Serializable {
 		if(name.contains("_")){
 			displayName.replace("_"," ");
 		}
-		return memberID + " | " + displayName + " | " + Member.getAge(this.getBirthday()) + " | " + gender + " | " + dues;
+		return memberID + " | " + displayName + " | " + PersonalInformation.getAge(this.getBirthday()) + " | " + gender + " | " + dues;
 
 	}
 

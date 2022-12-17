@@ -79,22 +79,22 @@ public class MemberHandling {
                 CompetitionSwimmer k = (CompetitionSwimmer) m;
                 if (discplinKønAlder.contains("b")) {         //Brystsvømning
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getActiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[0] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getActiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[0] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getActiveInDisciplin()[0] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[0] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getActiveInDisciplin()[0] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[0] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -106,22 +106,22 @@ public class MemberHandling {
 
                 if (discplinKønAlder.contains("c")) {         //crawl
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getActiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[1] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getActiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[1] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getActiveInDisciplin()[1] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[1] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getActiveInDisciplin()[1] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[1] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -130,22 +130,22 @@ public class MemberHandling {
                 }
                 if (discplinKønAlder.contains("r")) {         //ryg
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getActiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[2] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getActiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[2] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getActiveInDisciplin()[2] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[2] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getActiveInDisciplin()[2] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[2] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
@@ -154,22 +154,22 @@ public class MemberHandling {
                 }
                 if (discplinKønAlder.contains("f")) {         //butterfly
                     if (discplinKønAlder.contains("mj")) {
-                        if (k.getActiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[3] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("kj")) {
-                        if (k.getActiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) < 18) {
+                        if (k.getActiveInDisciplin()[3] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) < 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ks")) {
-                        if (k.getActiveInDisciplin()[3] && !k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[3] && !k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }
                     if (discplinKønAlder.contains("ms")) {
-                        if (k.getActiveInDisciplin()[3] && k.isMale() && k.getAge(k.getBirthday()) >= 18) {
+                        if (k.getActiveInDisciplin()[3] && k.isMale() && PersonalInformation.getAge(k.getBirthday()) >= 18) {
                             top5.add(k);
                         }
                     }

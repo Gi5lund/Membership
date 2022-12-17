@@ -3,15 +3,15 @@ import java.time.LocalDate;
 
 public class PassivMember extends Member implements Serializable {
     private static final long serialVersionUID = -4483556479614794657L;
-    public PassivMember(String navn, LocalDate fødseldag, boolean gender, boolean harBetalt){
-        super(navn, fødseldag, gender, harBetalt);
+    public PassivMember(String name, LocalDate birthdate, boolean gender, boolean hasPaid){
+        super(name, birthdate, gender, hasPaid);
     }
     public PassivMember(){
         super();
     }
 
-    public PassivMember(int medlemnr, String medlemnavn, LocalDate bday, boolean isMale, String memberType, double fee, boolean hasPaid) {
-   super(medlemnr,medlemnavn,bday,isMale,memberType,fee,hasPaid);
+    public PassivMember(int memberID, String memberName, LocalDate bday, boolean isMale, String memberType, double fee, boolean hasPaid) {
+   super(memberID,memberName,bday,isMale,memberType,fee,hasPaid);
     }
 
 
