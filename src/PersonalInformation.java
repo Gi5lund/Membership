@@ -1,9 +1,11 @@
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 
 public class PersonalInformation implements Serializable {
-    private static final long serialVersionUID=0;
+    @Serial
+    private static final long serialVersionUID= 2393294789740398589L;
     private String firstname = "Firstname";
     private String middlenames = "Middlename(s) or empty";
     private String surname = "Surname";
@@ -57,7 +59,7 @@ public class PersonalInformation implements Serializable {
         }else{
             gender="Female";
         }
-        return fn+" "+mn+" "+sn+" "+gender+" "+getAge()" "+email;
+        return fn+" "+mn+" "+sn+" "+gender+" "+getAge(getBirthdate())+" "+getEmail();
 
     }
 

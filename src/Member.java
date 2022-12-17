@@ -105,8 +105,8 @@ public class Member implements Serializable {
 		else{
 			dues="Overdue";
 		}
-		String displayName= name;
-		if(name.contains("_")){
+		String displayName= personaldata.getFirstname();
+		if(displayName.contains("_")){
 			displayName.replace("_"," ");
 		}
 		return memberID + " | " + displayName + " | " + PersonalInformation.getAge(this.getBirthday()) + " | " + gender + " | " + dues;
@@ -119,7 +119,16 @@ public class Member implements Serializable {
 	}
 
 	public void setName(String nytnavn) {
-		this.name =nytnavn;
+		this.personaldata.setFirstname(nytnavn);
+	}
+	public void setFullName(String firstname,String surname){
+		this.personaldata.setFirstname(firstname);
+		this.personaldata.setSurname(surname);
+	}
+	public void setFullName(String firstname,String middlename,String surname){
+		this.personaldata.setFirstname(firstname);
+		this.personaldata.setMiddlenames(middlename);
+		this.personaldata.setSurname(surname);
 	}
 	public void setHasPaid(){
 		membershipPaid =true;
@@ -127,7 +136,7 @@ public class Member implements Serializable {
 
 
 	public String getMemberName() {
-		return name;
+		return personaldata.getFirstname()+" "+personaldata.getSurname();
 	}
 }
 
