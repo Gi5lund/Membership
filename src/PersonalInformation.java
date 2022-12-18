@@ -10,6 +10,7 @@ public class PersonalInformation implements Serializable {
     private String middlenames = "Middlename(s) or empty";
     private String surname = "Surname";
     private boolean genderIsMale;
+
     private LocalDate birthdate = LocalDate.now();
     private String email = "something@somewhere.end";
 
@@ -33,13 +34,13 @@ public class PersonalInformation implements Serializable {
     }
 
     /**
-     * @param birthday
+     * @param birthdate date of birth. use getBirthdate()
      */
-    public static int getAge(LocalDate birthday) {
+    public static int getAge(LocalDate birthdate) {
 
         LocalDate today = LocalDate.now();
-        //LocalDate birthday = LocalDate.of(birthday.getYear(), birthday.getMonth(), birthday.getDayOfMonth());
-        Period period = Period.between(birthday, today);
+        //LocalDate birthdate = LocalDate.of(birthdate.getYear(), birthdate.getMonth(), birthdate.getDayOfMonth());
+        Period period = Period.between(birthdate, today);
         return period.getYears();
     }
 
@@ -47,7 +48,7 @@ public class PersonalInformation implements Serializable {
         String fn = firstname;
         String mn = middlenames;
         String sn = surname;
-        String gender="";
+        String gender;
         if (fn.contains(" ")) {
             fn.replace(" ", "_");
         }
